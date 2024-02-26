@@ -7,7 +7,7 @@ class Solution {
         return ll;
         
     }
-    public void print( List<Integer>l,List<List<Integer>>ll,int []nums,int i){
+    public void print(List<Integer>l,List<List<Integer>>ll,int []nums,int i){
         ll.add(new ArrayList<>(l));
         for(int k=i;k<nums.length;k++){
         if(k>i&&nums[k]==nums[k-1]) continue;
