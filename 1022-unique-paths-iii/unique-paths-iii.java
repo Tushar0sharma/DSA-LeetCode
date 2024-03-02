@@ -1,6 +1,6 @@
 class Solution {
     public int uniquePathsIII(int[][] grid) {
-        int []cnt=new int[100];
+        int []cnt=new int[1];
         int total=0,start=0,end=0;
         for(int i=0;i<grid.length;i++){
             for(int j=0;j<grid[0].length;j++){
