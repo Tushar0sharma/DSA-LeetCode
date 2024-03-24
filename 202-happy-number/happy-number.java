@@ -1,21 +1,23 @@
 class Solution {
     public boolean isHappy(int n) {
-        Set<Integer>s=new HashSet<>();
-        s.add(n);
-        return check(n,s);
+        int slow = n;
+        int fast = n;
+
+        do{
+            slow = square(slow);
+            fast = square(square(fast));
+        }
+        while(slow != fast);
+
+        return slow==1;
     }
-    public boolean check(int n,Set<Integer>s){
-        if(n==1) return true;
+    public int square(int n){
         int sum=0;
-        while(n!=0){
+        while(n>0){
             int rem=n%10;
             sum+=rem*rem;
             n/=10;
         }
-        if(s.contains(sum)){
-            return false;
-        }
-        s.add(sum);
-        return check(sum,s);
+        return sum;
     }
 }
