@@ -1,25 +1,16 @@
 class Solution {
     public int maxDepth(String s) {
-        int []left=new int[s.length()];
-        int[]right=new int[s.length()];
-        int suml=0;
-        int sumr=0;
+        int res=0;
+        int curr=0;
         for(int i=0;i<s.length();i++){
             if(s.charAt(i)=='('){
-                suml++;
+                curr++;
+                res=Math.max(res,curr);
             }
-            left[i]=suml;
-        }
-        for(int i=0;i<s.length();i++){
             if(s.charAt(i)==')'){
-                sumr++;
+                curr--;
             }
-            right[i]=sumr;
         }
-        int max=0;
-        for(int i=0;i<s.length();i++){
-            max=Math.max(max,left[i]-right[i]);
-        }
-        return max;
+        return res;
     }
 }
