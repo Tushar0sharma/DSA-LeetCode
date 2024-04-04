@@ -1,30 +1,29 @@
 class Solution {
+    static int total;
     public int myAtoi(String s) {
-        int index=0;
-        int sign=1;
-        int total=0;
-         if (s.length() == 0) return 0;
-        while(index<s.length() && s.charAt(index)==' '){
-            index++;
-        }
-        if(index<s.length() && (s.charAt(index)=='+' || s.charAt(index)=='-')){
-            if(s.charAt(index)=='-'){
-                sign=-1;
+       total=0;
+       if(s.length()==0) return 0;
+       return call(s,0,true,false); 
+    }
+    public int call(String s,int i,boolean sign ,boolean num ){
+        if(i>=s.length()) return 0;
+        if(!num){
+            if(s.charAt(i)==' ') return call(s,i+1,sign,num);
+            if(s.charAt(i)=='+' || s.charAt(i)=='-'){
+                sign=(s.charAt(i)=='-')?false:true;
+                return call(s,i+1,sign,!num);
             }
-            index++;
         }
-        if (s.length() <index) {
-            return 0;
+        num=true;
+        char ch=s.charAt(i);
+        if(ch-'0'<0 ||ch-'0'>9) return 0;
+        // char ch=s.charAt(i);
+        if(total>Integer.MAX_VALUE/10 || (total==Integer.MAX_VALUE/10 && ch-'0'>7)){
+            return sign?Integer.MAX_VALUE:Integer.MIN_VALUE;
         }
-
-        while(index<s.length()){
-            int digit=s.charAt(index)-'0';
-            if(digit<0||digit>9) break;
-             if(Integer.MAX_VALUE/10 < total || (Integer.MAX_VALUE/10 == total && digit>7) )
-               return sign==1?Integer.MAX_VALUE:Integer.MIN_VALUE;
-            total=total*10+digit;
-            index++;
-        }
-     return total*sign;   
+        total=total*10+ch-'0';
+        int t=call(s,i+1,sign,num);
+        if(t==0) return sign?total:-total;
+        else return t;
     }
 }
