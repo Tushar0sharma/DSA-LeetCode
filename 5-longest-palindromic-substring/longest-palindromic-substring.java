@@ -1,24 +1,23 @@
 class Solution {
     public String longestPalindrome(String s) {
-        //expand from center
-        String max=s.substring(0,1);
-        for(int i=0;i<s.length();i++){
-            String odd=expand(s,i,i);
-            String even=expand(s,i,i+1);
-            if(even.length()>max.length()){
-                max=even;
-            }
-            if(odd.length()>max.length()){
-                max=odd;
+     //Dynamic Programming
+     int l=0;
+     int r=0;
+     int max=1;
+     boolean[][]path=new boolean[s.length()][s.length()];
+     for(int i=0;i<s.length();i++){
+        path[i][i]=true;
+        for(int j=0;j<i;j++){
+            if(s.charAt(i)==s.charAt(j) && (i-j<=2 || path[j+1][i-1])){
+                path[j][i]=true;
+                if((i-j+1) >max){
+                    max=i-j+1;
+                    l=j;
+                    r=i;
+                }
             }
         }
-        return max;
-    }
-    public String expand(String s,int l,int r){
-        while(l>=0 && r<s.length() && s.charAt(l)==s.charAt(r)){
-            l--;
-            r++;
-        }
-        return s.substring(l+1,r);
+     }   
+     return s.substring(l,r+1);
     }
 }
