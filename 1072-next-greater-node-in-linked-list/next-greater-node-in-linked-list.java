@@ -11,20 +11,31 @@
 class Solution {
     public int[] nextLargerNodes(ListNode head) {
         ListNode temp=head;
-        List<Integer>l=new ArrayList<>();
+        int[]arr=new int[ListLength(head)];
+        int i=0;
         while(temp!=null){
-            ListNode temp1=temp;
-            while(temp1!=null && temp.val>=temp1.val){
-                temp1=temp1.next;
-            }
-            if(temp1==temp || temp1==null) l.add(0);
-            else l.add(temp1.val);
+            arr[i++]=findlarge(temp,temp.val);
             temp=temp.next;
         }
-        int []arr=new int[l.size()];
-        for(int i=0;i<l.size();i++){
-            arr[i]=l.get(i);
-        }
         return arr;
+    }
+    public int findlarge(ListNode head,int value){
+        int large=0;
+        while(head!=null){
+            if(head.val>value){
+                large=head.val;
+                break;
+            }
+            head=head.next;
+        }
+        return large;
+    }
+    public int ListLength(ListNode head){
+        int cnt=0;
+        while(head!=null){
+            cnt++;
+            head=head.next;
+        }
+        return cnt;
     }
 }
