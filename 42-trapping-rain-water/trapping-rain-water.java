@@ -15,6 +15,9 @@ class Solution {
         for(int i=0;i<n;i++){
            ans+=Math.min(left[i],right[i])-height[i];
         }
+        for(int i:left) System.out.print(i+" ");
+        System.out.println();
+        for(int i:right) System.out.print(i+" ");
         return ans;
         
     }
