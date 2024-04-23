@@ -13,34 +13,28 @@ class Solution {
         if(check(head,k)){
             return head;
         }
-        ListNode curr=head;
         ListNode prev=null;
         ListNode next=null;
-
+        ListNode curr=head;
         int cnt=0;
-        
-        while(curr!=null && cnt<k){
-            cnt++;
+        while(cnt<k && curr!=null){
             next=curr.next;
             curr.next=prev;
             prev=curr;
             curr=next;
+            cnt++;
         }
-        
         if(next!=null){
-            ListNode temp=reverseKGroup(next,k);
-            head.next=temp;
+            head.next=reverseKGroup(next,k);
         }
-
         return prev;
     }
     public boolean check(ListNode head,int k){
-        ListNode st=head;
-        int size=0;
-        while(st!=null){
-            st=st.next;
-            size++;
+        int cnt=0;
+        while(head!=null){
+            cnt++;
+            head=head.next;
         }
-        return size<k;
+        return cnt<k;
     }
 }
