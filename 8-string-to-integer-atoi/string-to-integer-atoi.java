@@ -17,7 +17,6 @@ class Solution {
         num=true;
         char ch=s.charAt(i);
         if(ch-'0'<0 ||ch-'0'>9) return 0;
-        // char ch=s.charAt(i);
         if(total>Integer.MAX_VALUE/10 || (total==Integer.MAX_VALUE/10 && ch-'0'>7)){
             return sign?Integer.MAX_VALUE:Integer.MIN_VALUE;
         }
