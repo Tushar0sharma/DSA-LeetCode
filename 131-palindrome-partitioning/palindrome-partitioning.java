@@ -10,11 +10,11 @@ class Solution {
             ll.add(new ArrayList<>(l));
             return;
         }
-        for(int i=0;i<s.length();i++){
-            String k=s.substring(0,i+1);
+        for(int i=1;i<=s.length();i++){
+            String k=s.substring(0,i);
             if(check(k)){
                 l.add(k);
-                partition(s.substring(i+1),ll,l);
+                partition(s.substring(i),ll,l);
                 l.remove(l.size()-1);
             }
         }
