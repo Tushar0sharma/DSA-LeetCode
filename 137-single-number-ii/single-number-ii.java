@@ -1,16 +1,16 @@
 class Solution {
     public int singleNumber(int[] nums) {
-     Map<Integer,Integer>mp=new HashMap<>();
+        
+        int ans=0;
 
-     for(int num:nums){
-        mp.put(num,mp.getOrDefault(num,0)+1);
-     }   
-
-     for(Map.Entry<Integer,Integer> entry:mp.entrySet()){
-        if(entry.getValue()==1){
-            return entry.getKey();
+        for(int i=0;i<32;i++){
+            int sum=0;
+            for(int num:nums){
+                sum+=(num>>i)&1;
+            }
+            sum%=3;
+            ans|=(sum<<i);
         }
-     }
-     return -1;
+        return ans;
     }
 }
