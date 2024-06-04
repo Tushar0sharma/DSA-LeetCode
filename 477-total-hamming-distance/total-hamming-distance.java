@@ -1,14 +1,13 @@
 class Solution {
     public int totalHammingDistance(int[] nums) {
-        int sum=0;
-        for(int i=0;i<nums.length;i++){
-            for(int j=i+1;j<nums.length;j++){
-                sum+=humming(nums[i],nums[j]);
+        int ans=0;
+        for(int i=0;i<32;i++){
+            int sum=0;
+            for(int j=0;j<nums.length;j++){
+                sum+=(nums[j]>>i) & 1;
             }
+            ans+=sum*(nums.length-sum);
         }
-        return sum;
-    }
-    public int humming(int x,int y){
-        return Integer.bitCount(x^y);
+        return ans;
     }
 }
