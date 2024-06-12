@@ -1,15 +1,12 @@
 class Solution {
     public int climbStairs(int n) {
-        Map<Integer,Integer>mp=new HashMap<>();
-        return f(n,mp);
-    }
-    public int f(int n,Map<Integer,Integer>mp){
-        if(n==0 || n==1){
-            return 1;
-        }
-        if(!mp.containsKey(n)){
-            mp.put(n,f(n-2,mp)+f(n-1,mp));
-        }
-        return mp.get(n);
+       if(n==0 || n==1) return 1;
+       int []dp=new int[n+1];
+       dp[0]=dp[1]=1;
+
+       for(int i=2;i<=n;i++){
+        dp[i]=dp[i-1]+dp[i-2];
+       }
+       return dp[n];
     }
 }
