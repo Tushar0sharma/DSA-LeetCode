@@ -1,19 +1,19 @@
 class Solution {
     public int findDuplicate(int[] nums) {
-        //FLOYD's CYCLE DETECTION 
-        int slow=nums[0];
-        int fast=nums[0];
-
-        do{
-            slow=nums[slow];
-            fast=nums[nums[fast]];
+        
+        // int ans=-1;
+        for(int i=0;i<nums.length;i++){
+            
+            int idx=Math.abs(nums[i]);
+            if(nums[idx-1]<0){
+                return Math.abs(nums[i]);
+            }
+            if(nums[idx-1]>0){
+                nums[idx-1]=-nums[idx-1];
+            }
         }
-        while(slow!=fast);
-        slow=nums[0];
-        while(slow!=fast){
-            slow=nums[slow];
-            fast=nums[fast];
-        }
-        return slow;
+        for(int i:nums) System.out.print(i+" ");
+        
+        return -1;
     }
 }
