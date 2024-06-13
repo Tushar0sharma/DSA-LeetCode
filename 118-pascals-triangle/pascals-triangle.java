@@ -7,8 +7,8 @@ class Solution {
         return ll;
     }
     public List<Integer> generaterow(int i){
-        long ans=1;
         List<Integer>l=new ArrayList<>();
+        long ans=1;
         l.add(1);
         for(int j=1;j<i;j++){
             ans=ans*(i-j);
