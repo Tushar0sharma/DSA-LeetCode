@@ -1,17 +1,19 @@
 class Solution {
     public int[] singleNumber(int[] nums) {
-        Map<Integer,Integer>mp=new HashMap<>();
-        
+        int diff=0;
         for(int num:nums){
-            mp.put(num,mp.getOrDefault(num,0)+1);
-        }
-        int []ans=new int[2];
-        int i=0;
+            diff^=num;
+        }   
 
-        for(Map.Entry<Integer,Integer>entry:mp.entrySet()){
-            if(entry.getValue()==1){
-                ans[i]=entry.getKey();
-                i++;
+        diff&=-diff;
+
+        int ans[]={0,0};
+        for(int num:nums){
+            if((num & diff)==0){
+                ans[0]^=num;
+            }
+            else{
+                ans[1]^=num;
             }
         }
         return ans;
