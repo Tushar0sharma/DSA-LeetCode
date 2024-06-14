@@ -1,23 +1,20 @@
 class Solution {
     public boolean equalFrequency(String word) {
-        int[]arr=new int[26];
+        int []cnt=new int[26];
         for(char ch:word.toCharArray()){
-        arr[ch-97]++;
+            cnt[ch-97]++;
         }
-        int cnt=0;
-        for(int i=0;i<word.length();i++){
-            char ch=word.charAt(i);
-            arr[ch-'a']--;
-            if(equalcnt(arr)){
-                return true;
-            }
-            arr[ch-'a']++;
+
+        for(char ch:word.toCharArray()){
+            cnt[ch-97]--;
+            if(equal(cnt)) return true;
+            cnt[ch-97]++;
         }
         return false;
     }
-    public boolean equalcnt(int[]arr){
+    public boolean equal(int []cnt){
         int c=0;
-        for(int i:arr){
+        for(int i:cnt){
             if(i==0) continue;
             else if(c==0) c=i;
             else if(c==i) continue;
