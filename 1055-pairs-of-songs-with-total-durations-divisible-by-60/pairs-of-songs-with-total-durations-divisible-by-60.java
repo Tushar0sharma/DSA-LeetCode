@@ -1,16 +1,16 @@
 class Solution {
     public int numPairsDivisibleBy60(int[] time) {
+        int []v=new int [60];
         int cnt=0;
-        int[]v=new int[60];
-        for(int num:time){
-            int a=num%60;
-            if(a==0){
-                cnt+=v[a];
+        for(int t:time){
+            int rem=t%60;
+            if(rem==0){
+                cnt+=v[rem];
             }
             else{
-                cnt+=v[60-a];
+                cnt+=v[60-rem];
             }
-            v[a]++;
+            v[rem]++;
         }
         return cnt;
     }
