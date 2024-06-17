@@ -1,52 +1,40 @@
 class Solution {
     public int longestSubstring(String s, int k) {
-        int maxuniquecnt=getmax(s);
-        int freq[]=new int [26];
-        int res=0;
+        int maxcnt=getmax(s);
+        int []freq=new int[26];
+        int max=0;
 
-        for(int curr=1;curr<=maxuniquecnt;curr++){
-            int windowend=0,windowstart=0,uniquecnt=0,cntk=0;
+        for(int curr=1;curr<=maxcnt;curr++){
             Arrays.fill(freq,0);
-
+            int windowstart=0,windowend=0,unique=0,cnt=0;
             while(windowend<s.length()){
-                if(uniquecnt<=curr){
+                if(unique<=curr){
                     int idx=s.charAt(windowend)-'a';
-                    if(freq[idx]==0){
-                        uniquecnt++;
-                    }
+                    if(freq[idx]==0) unique++;
                     freq[idx]++;
-                    if(freq[idx]==k){
-                        cntk++;
-                    }
+                    if(freq[idx]==k) cnt++;
                     windowend++;
                 }
                 else{
                     int idx=s.charAt(windowstart)-'a';
-                    if(freq[idx]==k){
-                        cntk--;
-                    }
+                    if(freq[idx]==k) cnt--;
                     freq[idx]--;
-                    if(freq[idx]==0){
-                        uniquecnt--;
-                    }
+                    if(freq[idx]==0) unique--;
                     windowstart++;
                 }
-
-                if(uniquecnt==curr && uniquecnt==cntk){
-                    res=Math.max(windowend-windowstart,res);
+                if(unique==curr && unique==cnt){
+                    max=Math.max(max,windowend-windowstart);
                 }
             }
         }
-        return res;
+        return max;
     }
     public int getmax(String s){
+        int []freq=new int[26];
         int cnt=0;
-        boolean []freq=new boolean[26];
-        for(int i=0;i<s.length();i++){
-            if(!freq[s.charAt(i)-'a']){
-                freq[s.charAt(i)-'a']=true;
-                cnt++;
-            }
+        for(char ch:s.toCharArray()){
+            if(freq[ch-'a']==0) cnt++;
+            freq[ch-'a']++;
         }
         return cnt;
     }
