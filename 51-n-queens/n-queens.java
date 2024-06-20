@@ -1,61 +1,51 @@
 class Solution {
     public List<List<String>> solveNQueens(int n) {
         char[][]board=new char[n][n];
-         for(int i = 0; i < board.length; i++) {
-            for(int j = 0; j < board.length; j++) {
-                board[i][j] = '.';
+        for(int i=0;i<n;i++){
+            for(int j=0;j<n;j++){
+                board[i][j]='.';
             }
-         }
-            List<List<String>>ll=new ArrayList<>();
-         queen(board,0,ll);
-         return ll;
-        
+        }
+        List<List<String>>ll=new ArrayList<>();
+        call(ll,0,board,n);
+        return ll;
     }
-    public void queen(char[][]board,int row,List<List<String>>ll){
+    public void call(List<List<String>>ll,int row,char[][]board,int n){
         if(row==board.length){
-            ll.add(print(board));
-           return ;
+            print(board,ll, n);
+            return;
         }
-        for(int col=0;col<board.length;col++){
-            if(issafe(board,row,col)){
-            board[row][col]='Q';
-            queen(board,row+1,ll);
-            board[row][col]='.';
-            }
+        for(int col=0;col<n;col++){
+            if(safe(board,row,col,n)){
+                board[row][col]='Q';
+                call(ll,row+1,board,n);
+                board[row][col]='.';
+            } 
         }
-        
+        return ;
     }
-    private List<String> print(char[][]board){
+    public void print(char[][] board,List<List<String>>ll,int n){
         List<String>l=new ArrayList<>();
-       for(int i=0;i<board.length;i++){
-           String s=new String(board[i]);
-           l.add(s);
-       }
-       return l;
-    }
-    public boolean issafe(char[][] board,int row,int col){
-        for(int i=0;i<row;i++){
-            if(board[i][col]=='Q'){
-                return false;
-            }
+        for(int i=0;i<n;i++){
+            String s=new String(board[i]);
+            l.add(s);
         }
-        for(int i=0;i<col;i++){
-            if(board[row][i]=='Q'){
-                return false;
-            }
+        ll.add(l);
+        return ;
+    }
+    public boolean safe(char [][]board,int row,int col,int n){
+        for(int i=0;i<n;i++){
+            if(board[row][i]=='Q') return false;
+            if(board[i][col]=='Q') return false;
         }
         int leftmax=Math.min(row,col);
         for(int i=0;i<=leftmax;i++){
-            if(board[row-i][col-i]=='Q'){
-                return false;
-            }
+            if(board[row-i][col-i]=='Q') return false;
         }
-        int rightmax=Math.min(row,board.length-col-1);
+        int rightmax=Math.min(row,n-1-col);
         for(int i=0;i<=rightmax;i++){
-             if(board[row-i][col+i]=='Q'){
-                return false;
-            }
+            if(board[row-i][col+i]=='Q') return false;
         }
-       return true;
+        return true;
     }
 }
