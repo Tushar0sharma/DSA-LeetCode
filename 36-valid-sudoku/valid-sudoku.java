@@ -1,16 +1,14 @@
 class Solution {
     public boolean isValidSudoku(char[][] board) {
-        boolean b=solve(board);  
-        return b;   
+        return solve(board); 
     }
-    public boolean solve(char [][]board){
-        int n=board.length;
-        for(int i=0;i<n;i++){
-            for(int j=0;j<n;j++){
+    public boolean solve(char[][]board){
+        for(int i=0;i<9;i++){
+            for(int j=0;j<9;j++){
                 char num=board[i][j];
                 if(board[i][j]!='.'){
                     board[i][j]='.';
-                    if(!safe(board,num,i,j)){
+                    if(!safe(i,j,board,num)){
                         return false;
                     }
                     board[i][j]=num;
@@ -19,25 +17,17 @@ class Solution {
         }
         return true;
     }
-    public boolean safe(char[][]board,char k,int i,int j){
-        for(int x=0;x<9;x++){
-            if(board[i][x]==k){
-                return false;
-            } 
+    public boolean safe(int row,int col,char[][]board,char num){
+        for(int i=0;i<9;i++){
+            if(board[i][col]==num) return false;
+            if(board[row][i]==num) return false;
         }
-        for(int x=0;x<9;x++){
-            if(board[x][j]==k){
-                return false;
-            }
-        }
-        int startRow = i - i % 3;
-        int startCol = j - j % 3;
+        int start=row-row%3;
+        int end=col-col%3;
 
-        for(int a=startRow;a<startRow+3;a++){
-            for(int b=startCol;b<startCol+3;b++){
-                if(board[a][b]==k){
-                    return false;
-                }
+        for(int i=start;i<start+3;i++){
+            for(int j=end;j<end+3;j++){
+                if(board[i][j]==num) return false;
             }
         }
         return true;
