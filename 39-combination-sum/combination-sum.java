@@ -2,20 +2,20 @@ class Solution {
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
         List<List<Integer>>ll=new ArrayList<>();
         List<Integer>l=new ArrayList<>();
-        print(ll,l,candidates,target,0,0);
+        call(candidates,target,ll,l,0,0);
         return ll;
-        
     }
-    public void  print( List<List<Integer>>ll,List<Integer>l,int[] candidates, int target,int value,int idx){
-        if(value==target){
-            ll.add(new ArrayList(l));
-            return;
+    public void call(int[] c, int t,List<List<Integer>>ll,List<Integer>l,int idx,int sum){
+        if(sum==t){
+            ll.add(new ArrayList<>(l));
+            return ;
         }
-        if(value>target) return;
-        for(int i=idx;i<candidates.length;i++){
-            l.add(candidates[i]);
-            print(ll,l,candidates,target,value+candidates[i],i);
+        if(sum>t) return ;
+        for(int i=idx;i<c.length;i++){
+            l.add(c[i]);
+            call(c,t,ll,l,i,sum+c[i]);
             l.remove(l.size()-1);
         }
+        return;
     }
 }
