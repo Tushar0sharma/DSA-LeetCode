@@ -1,15 +1,15 @@
 class Solution {
     public int numberOfSubarrays(int[] nums, int k) {
-        int []a=new int[nums.length+1];
+        Map<Integer,Integer>mp=new HashMap<>();
         int pre=0;
         int res=0;
-        a[0]=1;
+        mp.put(0,1);
         for(int i:nums){
             pre+=i%2;
-            if(pre>=k){
-                res+=a[pre-k];
+            if(mp.containsKey(pre-k)){
+                res+=mp.get(pre-k);
             }
-            a[pre]++;
+            mp.put(pre,mp.getOrDefault(pre,0)+1);
         }
         return res;
     }
