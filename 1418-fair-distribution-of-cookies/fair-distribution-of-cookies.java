@@ -17,6 +17,7 @@ class Solution {
             sum[i]+=c[s];
             call(s+1,c,k,sum);
             sum[i]-=c[s];
+            if(sum[i]==0) break;
         }
         return;
     }
