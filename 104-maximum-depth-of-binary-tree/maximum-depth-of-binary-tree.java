@@ -19,14 +19,8 @@ class Solution {
     }
     public int depth(int depth,TreeNode root){
         if(root==null) return depth-1;
-        else if(root.left==null && root.right==null) return depth;
-        else if(root.left!=null && root.right==null){
-            return depth(depth+1,root.left);
-        }
-        else if(root.right!=null && root.left==null){
-            return depth(depth+1,root.right);
-        }
-        else
-        return Math.max(depth(depth+1,root.left),depth(depth+1,root.right));
+        int l=depth(depth+1,root.left);
+        int r=depth(depth+1,root.right);
+        return Math.max(l,r);
     }
 }
