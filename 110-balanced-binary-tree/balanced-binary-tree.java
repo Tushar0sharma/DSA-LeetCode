@@ -15,13 +15,14 @@
  */
 class Solution {
     public boolean isBalanced(TreeNode root) {
-        return dfs(root)!=-1;
+        int c=call(root);
+        return c!=-1;
     }
-    public int dfs(TreeNode root){
+    public int  call(TreeNode root){
         if(root==null) return 0;
-        int l=dfs(root.left);
+        int l=call(root.left);
         if(l==-1) return -1;
-        int r=dfs(root.right);
+        int r=call(root.right);
         if(r==-1) return -1;
         if(Math.abs(l-r)>1) return -1;
         return 1+Math.max(l,r);
