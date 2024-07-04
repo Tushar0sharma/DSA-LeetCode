@@ -25,8 +25,6 @@ class Solution {
         l.add(root.val);
         if(root.left==null && root.right==null && t-root.val==0){
             ll.add(new ArrayList<>(l));
-            l.remove(l.size()-1);
-            return;
         }
         else{
             call(l,ll,root.left,t-root.val);
