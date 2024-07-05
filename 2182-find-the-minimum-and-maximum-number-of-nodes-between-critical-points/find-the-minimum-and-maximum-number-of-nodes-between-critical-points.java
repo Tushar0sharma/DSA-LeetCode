@@ -10,46 +10,36 @@
  */
 class Solution {
     public int[] nodesBetweenCriticalPoints(ListNode head) {
-        int len=length(head);
+        ListNode temp=head;
+        int len=len(temp);
         int []ans={-1,-1};
         if(len==2) return ans;
-        ListNode temp=head;
         int i=2;
         List<Integer>l=new ArrayList<>();
         while(temp.next!=null && temp.next.next!=null){
-            if(temp.val<temp.next.val && temp.next.val>temp.next.next.val){
-                l.add(i);
-            }
             if(temp.val>temp.next.val && temp.next.val<temp.next.next.val){
                 l.add(i);
             }
-            temp=temp.next;
+            if(temp.val<temp.next.val && temp.next.val>temp.next.next.val){
+                l.add(i);
+            }
             i++;
+            temp=temp.next;
         }
-        if(l.size()<2){
-            return ans;
+        if(l.size()<2) return ans;
+        int min=Integer.MAX_VALUE;
+        for(int k=1;k<l.size();k++){
+            min=Math.min(min,l.get(k)-l.get(k-1));
         }
-        System.out.println(l);
-        // if(l.size()==1){
-        //     // ans[0]=l.get(0);
-        //     // ans[1]=l.get(0);
-        //     return ans;
-        // }
-        int mini=Integer.MAX_VALUE;
-        for(int f=1;f<l.size();f++){
-            mini=Math.min(l.get(f)-l.get(f-1),mini);
-        }
-        int max=l.get(l.size()-1)-l.get(0);
-        ans[0]=mini;
-        ans[1]=max;
-
+        ans[0]=min;
+        ans[1]=l.get(l.size()-1)-l.get(0);
         return ans;
     }
-    public int length(ListNode head){
+    public int len(ListNode temp){
         int cnt=0;
-        while(head!=null){
+        while(temp!=null){
             cnt++;
-            head=head.next;
+            temp=temp.next;
         }
         return cnt;
     }
