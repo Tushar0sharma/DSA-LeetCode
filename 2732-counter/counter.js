@@ -3,9 +3,10 @@
  * @return {Function} counter
  */
 var createCounter = function(n) {
-    
+    var cnt=n-1;
     return function() {
-        return n++;
+        cnt++;
+        return cnt;
     };
 };
 
