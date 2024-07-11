@@ -4,7 +4,7 @@ class Solution {
         for(String s:strs){
             char[]c=new char[26];
             for(char ch:s.toCharArray()) c[ch-'a']++;
-            String k=String.valueOf(c);
+            String k=new String(c);
             System.out.println(k);
             if(!mp.containsKey(k)) mp.put(k,new ArrayList<>());
             mp.get(k).add(s);
