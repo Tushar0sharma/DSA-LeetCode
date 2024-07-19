@@ -1,21 +1,17 @@
 class Solution {
-    public int strStr(String s, String k) {
-        for(int i=0;i<s.length();i++){
-            if(check(s,i,k)){
-                return i;
+    public int strStr(String h, String n) {
+        int i=0;
+        int j=0;
+        while(j<n.length() && i<h.length()){
+            int temp=i;
+            while(j<n.length() && i<h.length() && n.charAt(j)==h.charAt(i)){
+                i++;
+                j++;
             }
+            if(j==n.length()) return temp;
+            i=temp+1;
+            j=0;
         }
         return -1;
-    }
-    public boolean check(String s,int i,String k){
-        int j=0;
-        while(j!=k.length()){
-            if(i==s.length() || k.charAt(j)!=s.charAt(i)){
-                return false;
-            }
-            j++;
-            i++;
-        }
-        return true;
     }
 }
