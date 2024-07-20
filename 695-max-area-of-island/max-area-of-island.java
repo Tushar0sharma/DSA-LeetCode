@@ -1,8 +1,6 @@
 class Solution {
     boolean[][]seen;
-    int [][]grid;
     public int maxAreaOfIsland(int[][] grid) {
-        this.grid=grid;
         seen=new boolean[grid.length][grid[0].length];
         int ans=0;
         for(int i=0;i<grid.length;i++){
