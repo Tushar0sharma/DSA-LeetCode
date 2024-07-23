@@ -20,33 +20,24 @@ class Solution {
         List<Integer>order=new ArrayList<>();
         List<List<Integer>>ll=new ArrayList<>();
         for(int i=0;i<=n;i++) ll.add(new ArrayList<>());
+        int []deg=new int[n+1];
         for(int []r:row){
             ll.get(r[0]).add(r[1]);
+            deg[r[1]]++;
         }
-        boolean []cycle={false};
-        int []vis=new int[n+1];
+        Queue<Integer>q=new LinkedList<>();
         for(int i=1;i<=n;i++){
-            if(vis[i]==0){
-                dfs(vis,cycle,order,ll,i);
-                if(cycle[0]) return new ArrayList<>();
+            if(deg[i]==0) q.add(i);
+        }
+        while(!q.isEmpty()){
+            int w=q.poll();
+            order.add(w);
+            n--;
+            for(int v:ll.get(w)){
+                if(--deg[v]==0) q.add(v);
             }
         }
-        Collections.reverse(order);
+        if(n!=0) return new ArrayList<>();     
         return order;
-    }
-    public void dfs(int[] vis,boolean[]cycle,List<Integer>order,List<List<Integer>>ll,int i){
-        vis[i]=1;
-        for(int k:ll.get(i)){
-            if(vis[k]==0){
-                dfs(vis,cycle,order,ll,k);
-                if(cycle[0]) return;
-            }
-            else if(vis[k]==1){
-                cycle[0]=true;
-                return;
-            }
-        }
-        vis[i]=2;
-        order.add(i);
     }
 }
