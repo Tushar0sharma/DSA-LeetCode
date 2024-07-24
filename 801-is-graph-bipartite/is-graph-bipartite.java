@@ -4,18 +4,24 @@ class Solution {
         Arrays.fill(vis,-1);
         for(int i=0;i<vis.length;i++){
             if(vis[i]==-1){
-                if(!dfs(i,graph,vis,0)) return false;
+                if(!bfs(i,graph,vis,0)) return false;
             }
         }
         return true;
     }
-    public boolean dfs(int i,int[][]graph,int[]vis,int color){
+    public boolean bfs(int i,int[][]graph,int[]vis,int color){
         vis[i]=color;
-        for(int k:graph[i]){
+        Queue<Integer>q=new LinkedList<>();
+        q.add(i);
+        while(!q.isEmpty()){
+            int node=q.poll();
+            for(int k:graph[node]){
             if(vis[k]==-1){
-                if(!dfs(k,graph,vis,1-color)) return false;
+                vis[k]=1-vis[node];
+                q.add(k);
             }
-            else if(vis[k]==color) return false;
+            else if(vis[node]==vis[k]) return false;
+        }
         }
         return true;
     }
