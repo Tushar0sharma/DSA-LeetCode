@@ -1,19 +1,22 @@
 class Solution {
-    public boolean canFinish(int numCourses, int[][] prerequisites) {
-        List<Integer>ans=new ArrayList<>();
-        List<Integer>[]g=new ArrayList[numCourses];
-        int []deg=new int[numCourses];
-        for(int i=0;i<numCourses;i++) g[i]=new ArrayList<Integer>();
-        for(int []e:prerequisites){
-            g[e[1]].add(e[0]);
-            deg[e[0]]++;
+    public boolean canFinish(int n, int[][] p) {
+        List<List<Integer>>ll=new ArrayList<>();
+        int []deg=new int[n];
+        for(int i=0;i<n;i++) ll.add(new ArrayList<>());
+        for(int []i:p){
+            ll.get(i[1]).add(i[0]);
+            deg[i[0]]++;
         }
-        for( int i=0;i<numCourses;i++) if(deg[i]==0) ans.add(i);
-        for(int i=0;i<ans.size();i++){
-            for(int j:g[ans.get(i)]){
-                if(--deg[j]==0) ans.add(j);
+        List<Integer>order=new ArrayList<>();
+        Queue<Integer>q=new LinkedList<>();
+        for(int i=0;i<n;i++) if(deg[i]==0) q.add(i);
+        while(!q.isEmpty()){
+            int w=q.poll();
+            order.add(w);
+            for(int s:ll.get(w)){
+                if(--deg[s]==0) q.add(s);
             }
         }
-        return ans.size()==numCourses;
+        return order.size()==n;
     }
 }
