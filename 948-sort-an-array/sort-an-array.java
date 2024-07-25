@@ -1,6 +1,5 @@
 class Solution {
     public int[] sortArray(int[] nums) {
-        //merge sort algo
         return call(nums,0,nums.length-1);
     }
     public int[] call(int []nums,int s,int e){
@@ -9,27 +8,30 @@ class Solution {
             a[0]=nums[s];
             return a;
         }
-        int mid=(s+e)/2;
-        int []arr1=call(nums,s,mid);
-        int []arr2=call(nums,mid+1,e);
-        return merge(arr1,arr2);
+         int mid=(s+e)/2;
+         int[]l=call(nums,s,mid);
+         int[]r=call(nums,mid+1,e);
+         return merge(l,r);
+        
     }
-    public int[] merge(int []arr1,int []arr2){
-        int []ans=new int[arr1.length+arr2.length];
-        int i=0,j=0,k=0;
-        while(i<arr1.length && j<arr2.length){
-            if(arr1[i]<=arr2[j]){
-                ans[k++]=arr1[i++];
+    public int[] merge(int []l,int[] r){
+        int i=0;
+        int j=0;
+        int []ans=new int[l.length+r.length];
+        int k=0;
+        while(i<l.length && j<r.length){
+            if(l[i]<=r[j]){
+                ans[k++]=l[i++];
             }
             else{
-                ans[k++]=arr2[j++];
+                ans[k++]=r[j++];
             }
         }
-        while(i<arr1.length){
-            ans[k++]=arr1[i++];
+        while(i<l.length){
+            ans[k++]=l[i++];
         }
-        while(j<arr2.length){
-            ans[k++]=arr2[j++];
+        while(j<r.length){
+            ans[k++]=r[j++];
         }
         return ans;
     }
