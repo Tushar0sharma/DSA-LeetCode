@@ -21,6 +21,7 @@ class Solution {
             int r=q.peek().row;
             int c=q.peek().col;
             int curr=q.peek().k;
+            if(r==n-1 && c==m-1) return curr;
             q.poll();
             int [][]dir={{1,0},{0,1},{-1,0},{0,-1}};
             for(int[] i:dir){
