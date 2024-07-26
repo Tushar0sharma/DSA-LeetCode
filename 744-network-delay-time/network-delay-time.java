@@ -2,15 +2,10 @@ class Solution {
     public int networkDelayTime(int[][] times, int n, int k) {
         PriorityQueue<int[]>pq=new PriorityQueue<>((a,b)->a[1]-b[1]);
         pq.add(new int[]{k,0});
-        List<int[]>[] ll = new ArrayList[n + 1];
-        for (int i = 1; i <= n; i++) {
-            ll[i] = new ArrayList<>();
-        }
-        for (int[] edge : times) {
-            int u = edge[0];
-            int v = edge[1];
-            int w = edge[2];
-            ll[u].add(new int[]{v, w});
+        List<List<int []>> ll = new ArrayList<>();
+        for(int i=0; i<=n; i++) ll.add(new ArrayList<>());
+        for(int i=0; i<times.length; i++){
+            ll.get(times[i][0]).add(new int[]{times[i][1],times[i][2]});
         }
         boolean[]vis=new boolean[n+1];
 
@@ -26,7 +21,7 @@ class Solution {
             if(vis[dest]) continue;
             vis[dest]=true;
             max=Math.max(max,w);
-            for(int []i:ll[dest]){
+            for(int []i:ll.get(dest)){
                 int u=i[0];
                 int v=i[1];
                 if(w+v<time[u]){
