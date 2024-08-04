@@ -9,7 +9,7 @@ class Solution {
                 ans[k++]=mp.size();
                 continue;
             }
-            var j=mp.get(i[0]);
+            int j=mp.get(i[0]);
             while(j<i[1]){
                 j=mp.remove(j);
             }
