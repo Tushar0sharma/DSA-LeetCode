@@ -20,16 +20,15 @@ class Solution {
         int k=1;
         int iter=0;
         int ans=0;
-        System.out.println(mp);
         while(!pq.isEmpty()){
-            iter++;
-            if(iter==9) k++;
-            if(iter==17) k++;
-            if(iter==25) k++;
             Pair p=pq.poll();
             int j=p.freq;
-            System.out.println(p.first);
             ans+=j*k;
+            iter++;
+            if(iter==8){
+                k++;
+                iter=0;
+            }
         }
         return ans;
     }
