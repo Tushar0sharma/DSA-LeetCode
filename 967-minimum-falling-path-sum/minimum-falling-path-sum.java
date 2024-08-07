@@ -8,17 +8,9 @@ class Solution {
                 dp[i][j] = Integer.MAX_VALUE;
             }
         }
-        for (int j = 0; j < m; j++) {
-            dp[n-1][j] = matrix[n-1][j];
-        }
         int min=Integer.MAX_VALUE;
         for(int i=0;i<m;i++){
             min=Math.min(min,call(0,i,dp,matrix,n,m));
-        }for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                System.out.print(dp[i][j]+" ");
-            }
-            System.out.println();
         }
         return min;
     }
