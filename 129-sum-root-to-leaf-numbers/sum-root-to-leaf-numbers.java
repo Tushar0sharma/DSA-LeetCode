@@ -16,22 +16,18 @@
 class Solution {
     public int sumNumbers(TreeNode root) {
         if(root==null) return 0;
-        List<String>l=new ArrayList<>();
-        call(root,"",l);
-        int sum=0;
-        for(String i:l){
-            sum+=Integer.valueOf(i);
-        }
-        return sum;
+        return sum(new StringBuilder(),root); 
     }
-    public void call(TreeNode root,String a,List<String>l){
-        if(root==null) return;
+    public int  sum(StringBuilder s,TreeNode root){
+        if(root==null) return 0;
+        s.append(root.val);
         if(root.left==null && root.right==null){
-            l.add(a+root.val);
-            return;
+            int sum=Integer.parseInt(s.toString());
+            s.deleteCharAt(s.length()-1);
+            return sum;
         }
-        call(root.left,a+root.val,l);
-        call(root.right,a+root.val,l);
-        return;
+        int su=sum(s,root.left)+sum(s,root.right);
+        s.deleteCharAt(s.length()-1);
+        return su;
     }
 }
