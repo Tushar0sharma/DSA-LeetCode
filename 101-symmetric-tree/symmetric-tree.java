@@ -18,10 +18,10 @@ class Solution {
         if(root==null) return true;
         return call(root.left,root.right);
     }
-    public boolean call(TreeNode l,TreeNode r){
-        if(l==null && r==null) return true;
-        if(l==null || r==null) return false;
-        if(l.val!=r.val) return false;
-        return call(l.left,r.right) && call(l.right,r.left);
+    public boolean call(TreeNode root1,TreeNode root2){
+        if(root1==null && root2==null) return true;
+        if(root1==null || root2==null) return false;
+        if(root1.val!=root2.val) return false;
+        return call(root1.left,root2.right)&& call(root1.right,root2.left);
     }
 }
