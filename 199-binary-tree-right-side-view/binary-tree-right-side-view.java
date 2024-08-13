@@ -13,37 +13,20 @@
  *     }
  * }
  */
- class pair{
-    TreeNode n;
-    int v;
-    pair(TreeNode n,int v){
-        this.n=n;
-        this.v=v;
-    } 
-    public TreeNode getKey(){
-        return n;
-    }
-    public int getValue(){
-        return v;
-    }
- }
 class Solution {
     public List<Integer> rightSideView(TreeNode root) {
+        Queue<TreeNode>q=new LinkedList<>();
+        q.add(root);
         List<Integer>l=new ArrayList<>();
         if(root==null) return l;
-        Queue<pair>q=new LinkedList<>();
-        Map<Integer,Integer>mp=new TreeMap<>();
-        q.add(new pair(root,0));
         while(!q.isEmpty()){
-            pair p=q.poll();
-            int v=p.getValue();
-            TreeNode n=p.getKey();
-            if(!mp.containsKey(v)) mp.put(v,n.val);
-            if(n.right!=null) q.add(new pair(n.right,v+1));
-            if(n.left!=null) q.add(new pair(n.left,v+1));
-        }
-        for(int i:mp.values()){
-            l.add(i);
+            int s=q.size();
+            for(int i=0;i<s;i++){
+                TreeNode p=q.poll();
+                if(i==s-1) l.add(p.val);
+                if(p.left!=null) q.add(p.left);
+                if(p.right!=null) q.add(p.right);
+            }
         }
         return l;
     }
