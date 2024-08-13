@@ -1,23 +1,22 @@
 class Solution {
-    public List<List<Integer>> combinationSum2(int[] c, int target) {
-        Arrays.sort(c);
-        List<List<Integer>> ll=new ArrayList<>();
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+        List<List<Integer>>ll=new ArrayList<>();
         List<Integer>l=new ArrayList<>();
-        call(ll,l,c,target,0,0);
+        Arrays.sort(candidates);
+        call(ll,l,candidates,target,0);
         return ll;
     }
-    public void call(List<List<Integer>>ll,List<Integer>l,int []c,int t,int sum,int idx){
-        if(sum==t){
+    public void call(List<List<Integer>> ll, List<Integer>l,int []cand,int tar,int start){
+        if(tar==0){
             ll.add(new ArrayList<>(l));
-            return;
+            return ;
         }
-        if(sum>t) return ;
-        for(int i=idx;i<c.length;i++){
-            if(i>idx && c[i]==c[i-1]) continue;
-            l.add(c[i]);
-            call(ll,l,c,t,sum+c[i],i+1);
+        if(tar<0) return;
+        for(int i=start;i<cand.length;i++){
+            if(i>start && cand[i]==cand[i-1]) continue;
+            l.add(cand[i]);
+            call(ll,l,cand,tar-cand[i],i+1);
             l.remove(l.size()-1);
         }
-        return;
     }
 }
