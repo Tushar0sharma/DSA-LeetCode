@@ -1,39 +1,57 @@
 class Solution {
+    int cnt;
     public int regionsBySlashes(String[] grid) {
-        int n = grid.length, m = grid[0].length();
-        int cnt = 0;
-        int[][] g = new int[n*3][m*3];
-        for(int i=0;i<n;i++){
-            for(int j=0;j<m;j++){
-                if(grid[i].charAt(j)=='/'){
-                    g[i * 3][j * 3 + 2] = 1;
-                    g[i * 3 + 1][j * 3 + 1] = 1;
-                    g[i * 3 + 2][j * 3] = 1;
-                }else if(grid[i].charAt(j)=='\\'){
-                    g[i * 3][j * 3] = 1;
-                    g[i * 3 + 1][j * 3 + 1] = 1;
-                    g[i * 3 + 2][j * 3 + 2] = 1;
+        cnt=0;
+        int n=grid.length;
+        int d=n+1;
+        int []par=new int[d*d];
+        int []rank=new int[d*d];
+        for(int i=0;i<d*d;i++) {
+            par[i]=i;
+            rank[i]=1;
+        }
+        for(int i=0;i<d;i++){
+            for(int j=0;j<d;j++){
+                if(i==0 || j==0 || j==d-1 || i==d-1){
+                    int c=i*d+j;
+                    union(par,rank,0,c);
                 }
             }
         }
-        for(int i=0;i<g.length;i++){
-            for(int j=0;j<g[0].length;j++){
-                if(g[i][j]==0){
-                    dfs(g,i,j);
-                    cnt++;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<grid[i].length();j++){
+                if(grid[i].charAt(j)=='/'){
+                    int a=(i+1)*d+j;
+                    int b=(i)*d+(j+1);
+                    union(par,rank,a,b);
+                }
+                else if(grid[i].charAt(j)=='\\'){
+                    int a=(i)*d+j;
+                    int b=(i+1)*d+(j+1);
+                    union(par,rank,a,b);
                 }
             }
         }
         return cnt;
     }
-    
-    void dfs(int[][] g, int i, int j){
-        int n = g.length, m = g[0].length;
-        if(i<0 || i>=n || j<0 || j>=m || g[i][j]==1) return;
-        g[i][j]=1;
-        int d[] = {0,-1,0,1,0};
-        for(int k=0;k<4;k++){
-            dfs(g,i+d[k],j+d[k+1]);
+    public void union(int []par,int []rank, int u,int v){
+        int pu=find(par,u);
+        int pv=find(par,v);
+        if(pu==pv){
+            cnt++;
+            return ;
         }
+        if(rank[pu]>rank[pv]){
+            rank[pu]+=rank[pv];
+            par[pv]=pu;
+        }
+        else{
+            rank[pv]+=rank[pu];
+            par[pu]=pv;
+        }
+    }
+    public int find(int []par,int u){
+        if(u==par[u]) return u;
+        return par[u]=find(par,par[u]);
     }
 }
