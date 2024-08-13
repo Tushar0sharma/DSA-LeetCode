@@ -1,7 +1,7 @@
 class Solution {
     int cnt;
     public int regionsBySlashes(String[] grid) {
-        cnt=0;
+        cnt=1;
         int n=grid.length;
         int d=n+1;
         int []par=new int[d*d];
@@ -14,6 +14,7 @@ class Solution {
             for(int j=0;j<d;j++){
                 if(i==0 || j==0 || j==d-1 || i==d-1){
                     int c=i*d+j;
+                    if(c!=0)
                     union(par,rank,0,c);
                 }
             }
