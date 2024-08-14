@@ -19,11 +19,16 @@ class Solution {
         call(root);
         return d;
     }
-    public int call(TreeNode root){
-        if(root==null) return 0;
-        int l=call(root.left);
-        int r=call(root.right);
-        d=Math.max(d,l+r);
-        return Math.max(l,r)+1;
+    public void call(TreeNode root){
+        if(root==null) return ;
+        int l=h(root.left);
+        int r=h(root.right);
+        d=Math.max(l+r,d);
+        call(root.left);
+        call(root.right);
+    }
+    public int h(TreeNode r){
+        if(r==null) return 0;
+        return Math.max(h(r.left),h(r.right))+1;
     }
 }
