@@ -16,15 +16,18 @@
 class Solution {
     public void flatten(TreeNode root) {
         if(root==null) return;
-        Stack<TreeNode>s=new Stack<>();
-        s.push(root);
-        while(!s.isEmpty()){
-            TreeNode q=s.pop();
-            if(q.right!=null) s.add(q.right);
-            if(q.left!=null) s.add(q.left);
-            if(!s.isEmpty()) q.right=s.peek();
-            q.left=null;
+        TreeNode curr=root;
+        while(curr!=null){
+            if(curr.left!=null){
+                TreeNode prev=curr.left;
+                while(prev.right!=null){
+                    prev=prev.right;
+                }
+                prev.right=curr.right;
+                curr.right=curr.left;
+                curr.left=null;
+            }
+            curr=curr.right;
         }
-        return;
     }
 }
