@@ -13,25 +13,14 @@
  *     }
  * }
  */
-
 class Solution {
-    List<Integer> arr=new ArrayList<>();
+    TreeNode prev=null;
     public void flatten(TreeNode root) {
-        if(root==null) return;
-        ans(root);
-    TreeNode dummy=root;
-    for(int i=1;i<arr.size();i++){
-        dummy.left=null;
-        dummy.right=new TreeNode(arr.get(i));
-        dummy=dummy.right;
-    }
-    return ;
-    }
-    public void ans(TreeNode tree){
-        if(tree==null) return ;
-        arr.add(tree.val);
-        ans(tree.left);
-        ans(tree.right);
-        return;
+        if(root==null) return ;
+        flatten(root.right);
+        flatten(root.left);
+        root.right=prev;
+        root.left=null;
+        prev=root;
     }
 }
