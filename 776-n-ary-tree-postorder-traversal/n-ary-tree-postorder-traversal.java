@@ -21,15 +21,15 @@ class Solution {
     public List<Integer> postorder(Node root) {
         List<Integer>l=new ArrayList<>();
         if(root==null) return l;
-        call(root,l);
-        l.add(root.val);
-        return l;
-    }
-    public void call(Node root,List<Integer>l){
-        if(root==null) return ;
-        for(Node r:root.children){
-            call(r,l);
-            l.add(r.val);
+        Stack<Node>s=new Stack<>();
+        s.push(root);
+        while(!s.isEmpty()){
+            Node q=s.pop();
+            l.add(0,q.val);
+            for(Node r:q.children){
+                s.push(r);
+            }
         }
+        return l;
     }
 }
