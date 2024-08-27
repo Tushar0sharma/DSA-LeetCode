@@ -20,7 +20,7 @@ class Solution {
     public int call(TreeNode root){
         if(root==null) return 0;
         int a=0;
-        if(root.left!=null && root.left.left==null && root.left.right==null)  a=root.left.val;
+        if(root.left!=null && root.left.left==null && root.left.right==null)  a+=root.left.val;
         return a+call(root.left)+call(root.right);
     }
 }
