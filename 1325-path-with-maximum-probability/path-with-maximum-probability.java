@@ -1,41 +1,40 @@
-class p{
-    double poss;
-    int node;
-    p(int node,double poss){
-        this.node=node;
-        this.poss=poss;
+class pair{
+    int d;
+    double dis;
+    pair(int d,double dis){
+        this.d=d;
+        this.dis=dis;
     }
 }
 class Solution {
-    public double maxProbability(int n, int[][] edges, double[] succProb, int start_node, int end_node) {
-        List<List<p>>ll=new ArrayList<>();
-        int k=0;
+    public double maxProbability(int n, int[][] edges, double[] succProb, int src, int end_node) {
+        List<List<pair>>ll=new ArrayList<>();
         for(int i=0;i<n;i++) ll.add(new ArrayList<>());
-        for(int i[]:edges){
-            ll.get(i[0]).add(new p(i[1],succProb[k]));
-            ll.get(i[1]).add(new p(i[0],succProb[k]));
-            k++;
+        for(int i=0;i<edges.length;i++){
+            int a=edges[i][0];
+            int b=edges[i][1];
+            ll.get(a).add(new pair(b,succProb[i]));
+            ll.get(b).add(new pair(a,succProb[i]));
         }
-        PriorityQueue<p>pq=new PriorityQueue<>((a,b)->Double.compare(b.poss,a.poss));
-        pq.add(new p(start_node,1));
+        PriorityQueue<pair>pq=new PriorityQueue<>((a,b)->Double.compare(b.dis,a.dis));
+        pq.add(new pair(src,1));
         double[]dist=new double[n];
         Arrays.fill(dist,Double.MIN_VALUE);
-        dist[start_node]=0;
+        dist[src]=0;
         while(!pq.isEmpty()){
-            p w=pq.poll();
-            int node=w.node;
-            double poss=w.poss;
-
-            if (node == end_node) return poss; 
-            for(p i:ll.get(node)){
-                int adjnode=i.node;
-                double adjposs=i.poss;
-                if(adjposs*poss>dist[adjnode]){
-                    dist[adjnode]=adjposs*poss;
-                    pq.add(new p(adjnode,dist[adjnode]));
-                } 
+            pair p=pq.poll();
+            int node=p.d;
+            double prob=p.dis;
+            if(node==end_node) return prob;
+            for(pair i:ll.get(node)){
+                int dest=i.d;
+                double pr=i.dis;
+                if(pr*prob>dist[dest]){
+                    dist[dest]=pr*prob;
+                    pq.add(new pair(dest,dist[dest]));
+                }
             }
         }
-        return dist[end_node];
+        return 0;
     }
 }
