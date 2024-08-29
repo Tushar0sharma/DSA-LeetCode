@@ -1,50 +1,47 @@
 class Solution {
     public int removeStones(int[][] stones) {
+        int maxr=0;
+        int maxc=0;
         int n=stones.length;
-        int mr=0;
-        int mc=0;
-        for(int i=0;i<n;i++){
-            mr=Math.max(mr,stones[i][0]);
-            mc=Math.max(mc,stones[i][1]);
+        for(int []i:stones){
+            maxr=Math.max(maxr,i[0]);
+            maxc=Math.max(maxc,i[1]);
         }
-        int []par=new int[mr+mc+2];
-        int []rank=new int [mr+mc+2];
-        for(int i=0;i<=mr+mc+1;i++){
+        int []par=new int[maxr+maxc+2];
+        int []size=new int[maxr+maxc+2];
+        for(int i=0;i<=maxr+maxc+1;i++){
             par[i]=i;
-            rank[i]=1;
+            size[i]=1;
         }
         Set<Integer>s=new HashSet<>();
-        for(int []i:stones){
-            int noder=i[0];
-            int nodec=i[1]+mr+1;
-            union(noder,nodec,par,rank);
-            s.add(noder);
-            s.add(nodec);
+        for(int[] i:stones){
+            int r=i[0];
+            int c=i[1]+maxr+1;
+            union(r,c,par,size);
+            s.add(r);
+            s.add(c);
         }
         int cnt=0;
         for(int i:s){
-            if(find(i,par)==i) cnt++;
+            if(find(par,i)==i) cnt++;
         }
-        return n-cnt;
+        return n-cnt;        
     }
-    public int find(int u,int []par){
-        if(par[u]==u) return u;
-        return par[u]=find(par[u],par);
+    public int find(int []par,int u){
+        if(u==par[u]) return u;
+        return par[u]=find(par,par[u]);
     }
-    
-    public void union(int u,int v,int []par,int []rank){
-        int pu=find(u,par);
-        int pv=find(v,par);
-
-        if(pu==pv) return;
-
-        if(rank[pu]>rank[pv]){
-            rank[pu]+=rank[pv];
-            par[pv]=pu;
+    public void union(int x,int y,int []par,int []size){
+        int ux=find(par,x);
+        int uy=find(par,y);
+        if(ux==uy) return;
+        if(size[ux]>size[uy]){
+            par[uy]=ux;
+            size[ux]+=size[uy];
+        }else{
+            par[ux]=uy;
+            size[uy]+=size[ux];
         }
-        else{
-            rank[pv]+=rank[pu];
-            par[pu]=pv;
-        }
+        return ;
     }
 }
