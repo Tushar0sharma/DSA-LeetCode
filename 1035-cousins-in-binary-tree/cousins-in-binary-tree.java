@@ -14,24 +14,25 @@
  * }
  */
 class Solution {
-    TreeNode xp=null;
-    TreeNode yp=null;
-    int xd=-1,yd=-1;
+    int px=-1;
+    int py=-1;
+    int dx=-1;
+    int dy=-1;
     public boolean isCousins(TreeNode root, int x, int y) {
-        call(root,x,y,0,null);
-        return (xd==yd)&&(xp!=yp);
+        call(root,x,y,-1,0);
+        return (px!=py && dx==dy);
     }
-    public void call(TreeNode root, int x, int y,int depth,TreeNode parent){
+    public void call(TreeNode root,int x,int y,int parx,int depth){
         if(root==null) return;
         if(root.val==x){
-            xp=parent;
-            xd=depth;
+            px=parx;
+            dx=depth;
         }
         else if(root.val==y){
-            yp=parent;
-            yd=depth;
+            py=parx;
+            dy=depth;
         }
-        call(root.left,x,y,depth+1,root);
-        call(root.right,x,y,depth+1,root);
+        call(root.left,x,y,root.val,depth+1);
+        call(root.right,x,y,root.val,depth+1);
     }
 }
