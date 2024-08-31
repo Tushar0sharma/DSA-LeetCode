@@ -2,7 +2,7 @@ class Solution {
     public int change(int t, int[] arr) {
         int n=arr.length;
         int [][]dp=new int[n][t+1];
-        for(int []i:dp) Arrays.fill(i,-1);
+        // for(int []i:dp) Arrays.fill(i,-1);
         for(int i=0;i<=t;i++){
             dp[0][i]=(i%arr[0]==0)?1:0;
         }
