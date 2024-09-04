@@ -9,12 +9,29 @@
  */
 class Solution {
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-        if(root==null) return null;
-        if(root.val==p.val || root.val==q.val) return root;
-        TreeNode l=lowestCommonAncestor(root.left,p,q);
-        TreeNode r=lowestCommonAncestor(root.right,p,q);
-        if(l==null) return r;
-        if(r==null) return l;
-        return root;
+        Map<TreeNode,TreeNode>mp=new HashMap<>();
+        Stack<TreeNode>st=new Stack<>();
+        st.push(root);
+        mp.put(root,null);
+        while(!st.isEmpty()){
+            TreeNode pp=st.pop();
+            if(pp.left!=null){
+                mp.put(pp.left,pp);
+                st.push(pp.left);
+            }
+            if(pp.right!=null){
+                mp.put(pp.right,pp);
+                st.push(pp.right);
+            }
+        }
+        Set<TreeNode>l=new HashSet<>();
+        while(p!=null){
+            l.add(p);
+            p=mp.get(p);
+        }
+        while(!l.contains(q)){
+            q=mp.get(q);
+        }
+        return q;
     }
 }
