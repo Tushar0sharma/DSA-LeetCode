@@ -1,21 +1,32 @@
 class Solution {
-    int d=-1;
+    // int d=-1;
     int mod=1_000_000_007;
     public int numRollsToTarget(int n, int k, int target) {
-        d=k;
+        // d=k;
         int [][]dp=new int[n+1][target+1];
-        for(int []i:dp) Arrays.fill(i,-1);
-        return call(dp,n,target);
-    }
-    public int call(int [][]dp,int i,int j){
-        if(i==0 && j==0) return 1;
-        if(j==0 || i==0) return 0;
-        if(dp[i][j]!=-1) return dp[i][j];
-        dp[i][j]=0;
-        for(int s=1;s<=d;s++){
-            if(j>=s)  dp[i][j]=(dp[i][j]+call(dp,i-1,j-s))%mod;
-            else break;
+        // for(int []i:dp) Arrays.fill(i,-1);
+        // return call(dp,n,target);
+        dp[0][0]=1;
+
+        for(int i=1;i<=n;i++){
+            for(int j=0;j<=target;j++){
+                for(int s=1;s<=k;s++){
+                    if(j>=s) dp[i][j]=(dp[i][j]+dp[i-1][j-s])%mod;
+                    else break;
+                }
+            }
         }
-        return (int)dp[i][j];
+        return dp[n][target];
     }
+    // public int call(int [][]dp,int i,int j){
+    //     if(i==0 && j==0) return 1;
+    //     if(j==0 || i==0) return 0;
+    //     if(dp[i][j]!=-1) return dp[i][j];
+    //     dp[i][j]=0;
+    //     for(int s=1;s<=d;s++){
+    //         if(j>=s)  dp[i][j]=(dp[i][j]+call(dp,i-1,j-s))%mod;
+    //         else break;
+    //     }
+    //     return (int)dp[i][j];
+    // }
 }
