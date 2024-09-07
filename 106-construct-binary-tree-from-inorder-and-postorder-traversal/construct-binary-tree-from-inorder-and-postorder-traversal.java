@@ -23,9 +23,9 @@ class Solution {
         TreeNode root=new TreeNode(post[pe]);
         int idx=s(in,post[pe]);
         int ls=idx-is;
-        int rs=ie-idx;
+        // int rs=ie-idx;
         root.left=call(post,in,ps,ps+ls-1,is,idx-1);
-        root.right=call(post,in,pe-rs,pe-1,idx+1,ie);
+        root.right=call(post,in,ps+ls,pe-1,idx+1,ie);
         return root;
     }
     public int s(int []in,int e){
