@@ -14,46 +14,25 @@
  * }
  */
 class Solution {
+    TreeNode first=null;
+    TreeNode sec=null;
+    TreeNode last=new TreeNode(Integer.MIN_VALUE);
     public void recoverTree(TreeNode root) {
-        List<Integer>l= call(root);
-        List<Integer>r=new ArrayList<>(l);
-        Collections.sort(l);
-        for(int i:r) System.out.println(i);
-        int x=-1;
-        int y=-1;
-        for(int i=0;i<l.size();i++){
-            if(r.get(i)!=l.get(i)){
-                if(x==-1) x=r.get(i);
-                else y=r.get(i);
-            }
-        }
-        call1(root,x,y);      
+        call(root);
+        int temp=first.val;
+        first.val=sec.val;
+        sec.val=temp;
     }
-    public void call1(TreeNode root,int x,int y){
-        if(root==null) return ;
-        if(root.val==x ){
-            root.val=y;
+    public void call(TreeNode root){
+        if(root==null) return;
+        call(root.left);
+        if(first==null && last.val>root.val){
+            first=last;
         }
-        else if(root.val==y){
-            root.val=x;
+        if(first!=null && last.val>root.val){
+            sec=root;
         }
-        call1(root.left,x,y);
-        call1(root.right,x,y);
-    }
-    public List<Integer> call(TreeNode r){
-        List<Integer>ans=new ArrayList<>();
-        Stack<TreeNode>s=new Stack<>();
-        if(r==null) return ans;
-        TreeNode curr=r;
-        while(!s.isEmpty() || curr!=null){
-            while(curr!=null){
-                s.push(curr);
-                curr=curr.left;
-            }
-            curr=s.pop();
-            ans.add(curr.val);
-            curr=curr.right;
-        }
-        return ans;
+        last=root;
+        call(root.right);
     }
 }
