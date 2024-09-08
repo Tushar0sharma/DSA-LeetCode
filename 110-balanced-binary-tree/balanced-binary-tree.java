@@ -15,10 +15,11 @@
  */
 class Solution {
     public boolean isBalanced(TreeNode root) {
-        int c=call(root);
-        return c!=-1;
+        if(root==null) return true;
+        int ans=call(root);
+        return ans!=-1;
     }
-    public int  call(TreeNode root){
+    public int call(TreeNode root){
         if(root==null) return 0;
         int l=call(root.left);
         if(l==-1) return -1;
