@@ -17,20 +17,17 @@ class Solution {
     public List<List<Integer>> pathSum(TreeNode root, int targetSum) {
         List<List<Integer>>ll=new ArrayList<>();
         List<Integer>l=new ArrayList<>();
-        call(l,ll,root,targetSum);
+        call(root,0,targetSum,l,ll);
         return ll;
     }
-    public void call(List<Integer>l,List<List<Integer>>ll,TreeNode root,int t){
+    public void call(TreeNode root,int c,int t,List<Integer>l,List<List<Integer>>ll){
         if(root==null) return ;
         l.add(root.val);
-        if(root.left==null && root.right==null && t-root.val==0){
+        if(root.left==null && root.right==null && c+root.val==t){
             ll.add(new ArrayList<>(l));
         }
-        else{
-            call(l,ll,root.left,t-root.val);
-            call(l,ll,root.right,t-root.val);
-        }
+        call(root.left,c+root.val,t,l,ll);
+        call(root.right,c+root.val,t,l,ll);
         l.remove(l.size()-1);
-        return;
     }
 }
