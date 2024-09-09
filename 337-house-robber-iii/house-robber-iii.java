@@ -14,18 +14,18 @@
  * }
  */
 class Solution {
-    Map<TreeNode,Integer>mp=new HashMap<>();
     public int rob(TreeNode root) {
-        if(root==null) return 0;
-        int ans=0;
-        if(mp.containsKey(root)) return mp.get(root);
-
-        if(root.left!=null){
-            ans+=rob(root.left.left)+rob(root.left.right);
-        }
-        if(root.right!=null) ans+=rob(root.right.left)+rob(root.right.right);
-        int a=Math.max(ans+root.val,rob(root.left)+rob(root.right));
-        mp.put(root,a);
-        return a;
+        int []ans=call(root);
+        return Math.max(ans[0],ans[1]);
     }
+    public int [] call(TreeNode root){
+        if(root==null) return new int[2];
+        int []l=call(root.left);
+        int []r=call(root.right);
+        int []ans=new int[2];
+        ans[0]=root.val+l[1]+r[1];
+        ans[1]=Math.max(l[0],l[1])+Math.max(r[0],r[1]);
+        return ans;
+    }
+
 }
