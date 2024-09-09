@@ -14,20 +14,19 @@
  * }
  */
 class Solution {
-    TreeNode ans=null;
-    int depth=0;
     public int findBottomLeftValue(TreeNode root) {
-        call(root,0);
-        if(ans==null) return root.val;
-        return ans.val;
-    }
-    public void call(TreeNode root,int d){
-        if(root==null) return ;
-        call(root.left,d+1);
-        if(d>depth) {
-            depth=d;
-            ans=root;
+        Queue<TreeNode>q=new LinkedList<>();
+        q.add(root);
+        int ans=root.val;
+        while(!q.isEmpty()){
+            int s=q.size();
+            for(int i=0;i<s;i++){
+                TreeNode p=q.poll();
+                if(i==0) ans=p.val;
+                if(p.left!=null) q.add(p.left);
+                if(p.right!=null) q.add(p.right);
+            }
         }
-        call(root.right,d+1);
+        return ans;
     }
 }
