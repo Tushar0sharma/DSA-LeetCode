@@ -8,40 +8,35 @@
  * }
  */
 class Solution {
-    Map<TreeNode,Integer>mp=new HashMap<>();
     public List<Integer> distanceK(TreeNode root, TreeNode target, int k) {
         List<Integer>l=new ArrayList<>();
-        find(root,target);
-        dfs(root,k,mp.get(root),l);
+        call(root,target.val,k,l);
         return l;
     }
-    public int find(TreeNode root,TreeNode t){
+    public int call(TreeNode root,int tar,int k,List<Integer>ll){
         if(root==null) return -1;
-        if(root==t){
-            mp.put(root,0);
+        if(root.val==tar){
+            print(root,k,ll);
             return 0;
         }
-        int l=find(root.left,t);
+        int l=call(root.left,tar,k,ll);
         if(l>=0){
-            mp.put(root,l+1);
+            if(l+1==k) ll.add(root.val);
+            else print(root.right,k-l-2,ll);
             return l+1;
         }
-        int r=find(root.right,t);
+        int r=call(root.right,tar,k,ll);
         if(r>=0){
-            mp.put(root,r+1);
+            if(r+1==k) ll.add(root.val);
+            else print(root.left,k-r-2,ll);
             return r+1;
         }
         return -1;
     }
-    public void dfs(TreeNode root,int k,int length,List<Integer>l){
-        if(root==null) return ;
-        if(mp.containsKey(root)){
-            length=mp.get(root);
-        }
-        if(k==length){
-            l.add(root.val);
-        }
-        dfs(root.left,k,length+1,l);
-        dfs(root.right,k,length+1,l);
+    public void print(TreeNode r,int k,List<Integer>ll){
+        if(r==null || k<0) return ;
+        if(k==0) ll.add(r.val);
+        print(r.left,k-1,ll);
+        print(r.right,k-1,ll);
     }
 }
