@@ -2,16 +2,17 @@ class Solution {
     public int lengthOfLIS(int[] nums) {
         int n=nums.length;
         int [][]dp=new int[n+1][n+1];
-        
-        return call(1,0,dp,nums);
-    }
-    public int call(int i,int j,int [][]dp,int []nums){
-        if(i==nums.length+1) return 0;
-        if(dp[i][j]!=0) return dp[i][j];
-        int nottake=call(i+1,j,dp,nums);
-        if(j==0 || nums[j-1]<nums[i-1]){
-            nottake=Math.max(nottake,1+call(i+1,i,dp,nums));
+
+        for(int i=n-1;i>=0;i--){
+            for(int j=n-1;j>=-1;j--){
+                int nt=dp[i+1][j+1];
+                int t=0;
+                if(j==-1 || nums[j]<nums[i]){
+                    t=1+dp[i+1][i+1];
+                }
+                dp[i][j+1]=Math.max(t,nt);
+            }
         }
-        return dp[i][j]=nottake;
+        return dp[0][0];
     }
 }
