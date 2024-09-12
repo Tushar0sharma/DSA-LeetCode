@@ -15,25 +15,25 @@
  */
 class Solution {
     public List<TreeNode> delNodes(TreeNode root, int[] to_delete) {
-        List<TreeNode>f=new ArrayList<>();
-        if(root==null) return f;
+        List<TreeNode>l=new ArrayList<>();
         Set<Integer>s=new HashSet<>();
         for(int i:to_delete){
             s.add(i);
         }
-        delete(s,root,f);
-        if(!s.contains(root.val)) f.add(root);
-        return f;        
+        root=call(s,root,l);
+        if(root!=null) l.add(root);
+        return l;
     }
-    private TreeNode delete (Set<Integer>s,TreeNode root,List<TreeNode>l){
-        if(root==null) return null;
-        root.left=delete(s,root.left,l);
-        root.right=delete(s,root.right,l);
-        if(s.contains(root.val)){
-            if(root.left!=null) l.add(root.left);
-            if(root.right!=null) l.add(root.right);
+    public TreeNode call(Set<Integer>s,TreeNode r,List<TreeNode>l){
+        if(r==null) return null;
+        r.left=call(s,r.left,l);
+        r.right=call(s,r.right,l);
+
+        if(s.contains(r.val)){
+            if(r.left!=null) l.add(r.left);
+            if(r.right!=null) l.add(r.right);
             return null;
         }
-        return root;
+        return r;
     }
 }
