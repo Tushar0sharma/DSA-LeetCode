@@ -1,27 +1,27 @@
 class Solution {
     public List<Integer> diffWaysToCompute(String expression) {
-        List<Integer> ans=new ArrayList<>();
-        int n=expression.length();
-        for(int i=0;i<n;i++){
-            if(expression.charAt(i)=='+'||expression.charAt(i)=='*'||expression.charAt(i)=='-'){
-                List<Integer>l=diffWaysToCompute(expression.substring(0,i));
-                List<Integer>r=diffWaysToCompute(expression.substring(i+1));
-                for(int x:l){
-                    for(int y:r){
+        List<Integer>l=new ArrayList<>();
+        for(int i=0;i<expression.length();i++){
+            if(expression.charAt(i)=='+'||expression.charAt(i)=='-'||expression.charAt(i)=='*'){
+                List<Integer>left=diffWaysToCompute(expression.substring(0,i));
+                List<Integer>right=diffWaysToCompute(expression.substring(i+1));
+                
+                for(Integer s:left){
+                    for(Integer t:right){
                         if(expression.charAt(i)=='+'){
-                            ans.add(x+y);
+                            l.add(s+t);
                         }
                         else if(expression.charAt(i)=='-'){
-                            ans.add(x-y);
+                            l.add(s-t);
                         }
-                        else {
-                            ans.add(x*y);
+                        else{
+                            l.add(s*t);
                         }
                     }
                 }
             }
         }
-        if(ans.size()==0) ans.add(Integer.valueOf(expression));
-        return ans;
+        if(l.size()==0) l.add(Integer.parseInt(expression));
+        return l;
     }
 }
