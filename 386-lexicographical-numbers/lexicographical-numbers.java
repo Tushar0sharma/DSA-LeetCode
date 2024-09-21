@@ -1,20 +1,20 @@
 class Solution {
     public List<Integer> lexicalOrder(int n) {
-        List<Integer>ans=new ArrayList<>();
-        return print(n,0,ans);        
+        List<Integer>l=new ArrayList<>();
+        return call(0,n,l);
     }
-    static List<Integer> print(int n,int cnt,List<Integer>ans){
-        if(cnt>n) return ans;
+    public List<Integer> call(int cnt,int n,List<Integer>l){
+        if(cnt>n) return l;
         int i=0;
         if(cnt==0){
             i=1;
         }
         else{
-            ans.add(cnt);
+            l.add(cnt);
         }
-        for(;i<=9;i++){
-            print(n,cnt*10+i,ans);
+        for(;i<10;i++){
+            call(cnt*10+i,n,l);
         }
-        return ans;
-    } 
+        return l;
+    }
 }
