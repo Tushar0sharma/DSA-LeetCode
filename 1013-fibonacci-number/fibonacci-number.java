@@ -1,14 +1,13 @@
 class Solution {
     public int fib(int n) {
-        int curr=0;
-        int prevs=0;
-        int prev=1;
-        if(n<=1) return n;
-        for(int i=2;i<=n;i++){
-            curr=prev+prevs;
-            prevs=prev;
-            prev=curr;
-        }
-        return curr;
+        int []dp=new int[n+1];
+        return call(n,dp);
+    }
+    public int call(int n,int []dp){
+        if(n==0 ) return 0;
+        if(n==1 ) return 1;
+        
+        if(dp[n]!=0) return dp[n];
+        return dp[n]=call(n-1,dp)+call(n-2,dp);
     }
 }
