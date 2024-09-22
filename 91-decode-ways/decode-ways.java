@@ -1,16 +1,15 @@
 class Solution {
     public int numDecodings(String s) {
-        int []dp=new int [s.length()];
-        return call(s,0,dp);        
-    }
-    public int call(String s,int i,int []dp){
-        if(s.length()==i){
-            return 1;
+        int n=s.length();
+        int []dp=new int[n+1];
+        if(s.charAt(0)=='0') return 0;
+        dp[0]=1;
+        dp[1]=(s.charAt(0)=='0')?0:1;
+        for(int i=2;i<=n;i++){
+            if(s.charAt(i-1)!='0') dp[i]+=dp[i-1];
+            int t=Integer.parseInt(s.substring(i-2,i));
+            if(t>=10 && t<=26) dp[i]+=dp[i-2];
         }
-        if(dp[i]!=0) return dp[i];
-        if(s.charAt(i)=='0') return 0;
-        int res=call(s,i+1,dp);
-        if(i+1<s.length() && (s.charAt(i)=='1' ||(s.charAt(i)=='2' && s.charAt(i+1)<'7'))) res+=call(s,i+2,dp);
-        return dp[i]=res;
+        return dp[n];
     }
 }
