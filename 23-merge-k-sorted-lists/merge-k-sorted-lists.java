@@ -10,41 +10,39 @@
  */
 class Solution {
     public ListNode mergeKLists(ListNode[] lists) {
-        if(lists.length==0 || lists==null){
-            return null;
-        }
-        ListNode head=sort(lists,0,lists.length-1);
-        return head;
+        if(lists.length==0) return null;
+        return call(lists,0,lists.length-1);
     }
-    public ListNode sort(ListNode []lists,int s,int e){
+    public ListNode call(ListNode[]list,int s,int e){
         if(s==e){
-            return lists[s];
+            return list[s];
         }
-        if(s<e){
-            int m=(s+e)/2;
-            ListNode l1=sort(lists,s,m);
-            ListNode l2=sort(lists,m+1,e);
+        else if(s<e){
+            int mid=s+(e-s)/2;
+            ListNode l1=call(list,s,mid);
+            ListNode l2=call(list,mid+1,e);
             return merge(l1,l2);
         }
-        else{
+        else {
             return null;
         }
     }
     public ListNode merge(ListNode l1,ListNode l2){
         ListNode dummy=new ListNode(0);
-        ListNode h=dummy;
+        ListNode t=dummy;
         while(l1!=null && l2!=null){
             if(l1.val<l2.val){
                 dummy.next=new ListNode(l1.val);
                 l1=l1.next;
+                dummy=dummy.next;
             }
             else{
                 dummy.next=new ListNode(l2.val);
                 l2=l2.next;
+                dummy=dummy.next;
             }
-            dummy=dummy.next;
         }
-        dummy.next=l1==null?l2:l1;
-        return h.next;
+        dummy.next=(l1==null)?l2:l1;
+        return t.next;
     }
 }
