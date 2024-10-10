@@ -1,14 +1,17 @@
 class Solution {
     public int maxWidthRamp(int[] nums) {
         int n=nums.length;
-        Integer[] idx = new Integer[n];
-        for(int i=0;i<n;i++) idx[i]=i;
-        Arrays.sort(idx,(i,j)->nums[i]!=nums[j]?nums[i]-nums[j]:i-j);
-        int min=n;
+        Stack<Integer>s=new Stack<>();
+        for(int i=0;i<n;i++){
+            if(s.isEmpty()|| nums[s.peek()]>nums[i]){
+                s.push(i);
+            }
+        }
         int ans=0;
-        for(int i:idx){
-            min=Math.min(i,min);
-            ans=Math.max(ans,i-min);
+        for(int i=n-1;i>=0;i--){
+            while(!s.isEmpty() && nums[s.peek()]<=nums[i]){
+                ans=Math.max(ans,i-s.pop());
+            }
         }
         return ans;
     }
