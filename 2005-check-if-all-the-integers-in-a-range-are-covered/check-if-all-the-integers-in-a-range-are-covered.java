@@ -1,16 +1,14 @@
 class Solution {
     public boolean isCovered(int[][] ranges, int left, int right) {
-        int[]arr=new int[52];
-        for(int[]range:ranges){
-            int st=range[0];
-            int en=range[1];
-            for(int i=st;i<=en;i++){
-                arr[i]=1;
-            }            
+        int []l=new int[52];
+        for(int i[]:ranges){
+            l[i[0]]++;
+            l[i[1]+1]--;
         }
-        for(int i=left;i<=right;i++){
-            if(arr[i]!=1) return false;
-            // System.out.print(arr[i]+" ");
+        int overlap=0;
+        for(int i=0;i<=right;i++){
+            overlap+=l[i];
+            if(i>=left && overlap==0) return false;
         }
         return true;
     }
