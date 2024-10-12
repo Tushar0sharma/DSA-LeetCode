@@ -1,17 +1,15 @@
 class Solution {
     public int numberOfPoints(List<List<Integer>> nums) {
-        int []arr=new int[101];
-        for(List<Integer>num:nums){
-            int start=num.get(0);
-            int end=num.get(1);
-            for(int i=start;i<=end;i++){
-                arr[i]=1;
-            }
+        int []l=new int[103];
+        for(List<Integer>i:nums){
+            l[i.get(0)]++;
+            l[i.get(1)+1]--;
         }
-        int cnt=0;
-        for(int a:arr){
-            if(a==1) cnt++;
+        int ans=0,d=0;
+        for(int i:l){
+            ans+=i;
+            if(ans>0) d++;
         }
-        return cnt;
+        return d;
     }
 }
