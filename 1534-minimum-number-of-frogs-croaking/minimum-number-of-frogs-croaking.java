@@ -39,8 +39,7 @@ class Solution {
             }
             max=Math.max(max,active);
         }
-        System.out.print(mp);
-        for(char i:mp.keySet()) if(mp.get(i)>0) return -1;
+        if(active>0) return -1;
         return max;
         
         
