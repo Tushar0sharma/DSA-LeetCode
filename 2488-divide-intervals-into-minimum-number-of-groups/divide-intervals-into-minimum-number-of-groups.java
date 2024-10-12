@@ -1,13 +1,15 @@
 class Solution {
     public int minGroups(int[][] intervals) {
-        Arrays.sort(intervals,(a,b)->a[0]-b[0]);
-        PriorityQueue<Integer>pq=new PriorityQueue<>();
+        TreeMap<Integer,Integer>mp=new TreeMap<>();
         for(int []i:intervals){
-            if(!pq.isEmpty() && pq.peek()<i[0]){
-                pq.poll();
-            }
-            pq.add(i[1]);
+            mp.put(i[0],mp.getOrDefault(i[0],0)+1);
+            mp.put(i[1]+1,mp.getOrDefault(i[1]+1,0)-1);
         }
-        return pq.size();
+        int max=0,ans=0;
+        for(int i:mp.keySet()){
+            max+=mp.get(i);
+            ans=Math.max(ans,max);
+        }
+        return ans;
     }
 }
