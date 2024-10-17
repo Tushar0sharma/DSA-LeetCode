@@ -12,20 +12,20 @@ class Solution {
         if (a > 0) pq.add(new pair(a,'a'));
         if (b > 0) pq.add(new pair(b,'b'));
         if (c > 0) pq.add(new pair(c,'c'));
-        StringBuilder ans=new StringBuilder();
+        String ans="";
         while(!pq.isEmpty()){
             pair p=pq.poll();
             if(ans.length()>1 && ans.charAt(ans.length()-1)==p.ch && ans.charAt(ans.length()-2)==p.ch ){
                 if(pq.isEmpty()) return ans.toString();
                 pair q=pq.poll();
-                ans.append(q.ch);
+                ans+=q.ch;
                 if(q.val-1>0){
                     pq.add(new pair(q.val-1,q.ch));
                 }
                 pq.add(p);
             }
             else{
-                ans.append(p.ch);
+                ans+=p.ch;
                 if(p.val-1>0){
                     pq.add(new pair(p.val-1,p.ch));
                 }
