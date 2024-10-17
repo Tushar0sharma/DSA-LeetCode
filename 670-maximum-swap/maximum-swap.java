@@ -11,7 +11,6 @@ class Solution {
             }
             r[i]=idx;
         }
-        for(int g:r) System.out.print(g+" ");
         int i=0;
         char []ch=s.toCharArray();
         while( i<s.length()){
