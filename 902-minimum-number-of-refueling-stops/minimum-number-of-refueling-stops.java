@@ -1,17 +1,17 @@
 class Solution {
-    public int minRefuelStops(int target, int startfuel, int[][] stations) {
-        PriorityQueue<Integer>pq=new PriorityQueue<>(Collections.reverseOrder());
-        int stop=0;
+    public int minRefuelStops(int target, int startFuel, int[][] stations) {
         int i=0;
-        while(startfuel<target){
-            while(i<stations.length && startfuel>=stations[i][0]){
+        int far=startFuel,cnt=0;
+        PriorityQueue<Integer>pq=new PriorityQueue<>(Collections.reverseOrder());
+        while(far<target){
+            while(i<stations.length && stations[i][0]<=far){
                 pq.add(stations[i][1]);
                 i++;
             }
             if(pq.isEmpty()) return -1;
-            startfuel+=pq.poll();
-            stop++;
+            far+=pq.poll();
+            cnt++;
         }
-        return stop;
+        return cnt;
     }
 }
