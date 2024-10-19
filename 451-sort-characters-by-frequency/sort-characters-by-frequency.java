@@ -11,16 +11,16 @@ class Solution {
         Map<Character,Integer>mp=new HashMap<>();
         for(char ch:s.toCharArray()) mp.put(ch,mp.getOrDefault(ch,0)+1);
         PriorityQueue<pair>pq=new PriorityQueue<>((a,b)->b.v-a.v);
-        String ans="";
+        StringBuilder ans=new StringBuilder();
         for(char c:mp.keySet()){
             pq.add(new pair(c,mp.get(c)));
         }
         while(!pq.isEmpty()){
             pair p=pq.poll();
             for(int i=0;i<p.v;i++){
-                ans+=p.ch;
+                ans.append(p.ch);
             }
         }
-        return ans;
+        return ans.toString();
     }
 }
