@@ -1,19 +1,30 @@
 class Solution {
-    public int findCircleNum(int[][] arr) {
-        boolean[]vis=new boolean[arr.length];
-        int ans=0;
-        for(int i=0;i<arr.length;i++){
-            if(!vis[i]){
-                ans++;
-                dfs(vis,arr,i);
+    public int findCircleNum(int[][] mat) {
+        int n=mat.length;
+        List<List<Integer>>l=new ArrayList<>();
+        for(int i=0;i<n;i++){
+            l.add(new ArrayList<>());
+        }
+        for(int i=0;i<n;i++){
+            for(int j=0;j<n;j++){
+                if(i!=j && mat[i][j]==1) l.get(i).add(j);
             }
         }
-        return ans;
+        boolean []vis=new boolean [n];
+        int c=0;
+        for(int i=0;i<n;i++){
+            if(!vis[i]){
+                c++;
+                call(vis,i,l);
+            }
+        }
+        System.out.println(l);
+        return c;
     }
-    public void dfs(boolean[]vis,int [][]arr,int curr){
-        vis[curr]=true;
-        for(int i=0;i<arr[curr].length;i++){
-            if(arr[curr][i]==1 && !vis[i]) dfs(vis,arr,i);
+    public void call(boolean []vis,int i,List<List<Integer>>l){
+        vis[i]=true;
+        for(int j:l.get(i)){
+            if(!vis[j]) call(vis,j,l);
         }
     }
 }
