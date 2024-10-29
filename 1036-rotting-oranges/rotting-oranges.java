@@ -1,51 +1,49 @@
-class pair{
-    int row;
-    int col;
-    int t;
-    pair(int row,int col,int t){
-        this.row=row;
-        this.col=col;
-        this.t=t;
-    }
-}
 class Solution {
     public int orangesRotting(int[][] grid) {
         int n=grid.length;
         int m=grid[0].length;
-        int [][]vis=new int[n][m];
-        Queue<pair>q=new LinkedList<>();
-        int cntf=0;
+        int [][]dp=new int[n][m];
+        for(int []i:dp) Arrays.fill(i,Integer.MAX_VALUE);
+        Queue<int[]>q=new LinkedList<>();
         for(int i=0;i<n;i++){
             for(int j=0;j<m;j++){
                 if(grid[i][j]==2){
-                    vis[i][j]=2;
-                    q.add(new pair(i,j,0));
+                    q.add(new int[]{i,j,0});
                 }
-                else vis[i][j]=0;
-                if(grid[i][j]==1) cntf++;
+                if(grid[i][j]==0){
+                    dp[i][j]=0;
+                }
             }
         }
-        int tm=0;
-        int cnt=0;
-        int row[]={0,0,1,-1};
-        int []col={1,-1,0,0};
         while(!q.isEmpty()){
-            int r=q.peek().row;
-            int c=q.peek().col;
-            int time=q.peek().t;
-            tm=Math.max(tm,time);
-            q.poll();
-            for(int i=0;i<4;i++){
-                int nr=r+row[i];
-                int nc=c+col[i];
-                if(nc>=0 && nr>=0 && nr<n && nc<m && vis[nr][nc]==0 && grid[nr][nc]==1){
-                    q.add(new pair(nr,nc,time+1));
-                    vis[nr][nc]=2;
-                    cnt++;
-                }
+            int []p=q.poll();
+            dp[p[0]][p[1]]=Math.min(dp[p[0]][p[1]],p[2]);
+            int i=p[0];
+            int j=p[1];
+            if(i+1>=0 && j>=0 && i+1<n && j<m && grid[i+1][j]==1){
+                grid[i+1][j]=2;
+                q.add(new int[]{i+1,j,p[2]+1});
+            }
+            if(i-1>=0 && j>=0 && i-1<n && j<m && grid[i-1][j]==1){
+                grid[i-1][j]=2;
+                q.add(new int[]{i-1,j,p[2]+1});
+            }
+            if(i>=0 && j-1>=0 && i<n && j-1<m && grid[i][j-1]==1){
+                grid[i][j-1]=2;
+                q.add(new int[]{i,j-1,p[2]+1});
+            }
+            if(i>=0 && j+1>=0 && i<n && j+1<m && grid[i][j+1]==1){
+                grid[i][j+1]=2;
+                q.add(new int[]{i,j+1,p[2]+1});
             }
         }
-        if(cnt!=cntf) return -1;
-        return tm;
+        int max=0;
+        for(int []i:dp){
+            for(int j:i){
+                if(j==Integer.MAX_VALUE) return -1;
+                max=Math.max(max,j);
+            } 
+        }    
+        return max;    
     }
 }
