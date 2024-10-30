@@ -1,29 +1,33 @@
 class Solution {
     public void solve(char[][] board) {
-        if(board.length==0) return;
         int n=board.length;
         int m=board[0].length;
+        boolean [][]vis=new boolean[n][m];
         for(int i=0;i<n;i++){
-            dfs(board,i,0,n,m);
-            dfs(board,i,m-1,n,m);
+            dfs(vis,board,i,0);
+            dfs(vis,board,i,m-1);
         }
         for(int i=0;i<m;i++){
-            dfs(board,0,i,n,m);
-            dfs(board,n-1,i,n,m);
+            dfs(vis,board,0,i);
+            dfs(vis,board,n-1,i);
         }
         for(int i=0;i<n;i++){
             for(int j=0;j<m;j++){
-                if(board[i][j]=='O') board[i][j]='X';
-                else if(board[i][j]=='P') board[i][j]='O';
+                if(!vis[i][j] && board[i][j]=='O') board[i][j]='X';
             }
         }
+
     }
-    public void dfs(char[][]board,int i,int j,int n,int m){
-        if(i<0 || j<0 || i==n || j==m || board[i][j]!='O') return ;
-        board[i][j]='P';
-        dfs(board,i+1,j,n,m);
-        dfs(board,i,j+1,n,m);
-        dfs(board,i,j-1,n,m);
-        dfs(board,i-1,j,n,m);
+    public void dfs(boolean [][]vis,char [][]board,int i,int j){
+        if(i<0 || j<0 || i>=vis.length || j>=vis[0].length|| board[i][j]!='O' || vis[i][j]) return;
+        vis[i][j]=true;
+        int []r={0,0,-1,1};
+        int []c={1,-1,0,0};
+        for(int k=0;k<4;k++){
+            int nr=i+r[k];
+            int nc=j+c[k];
+            dfs(vis,board,nr,nc);
+        }
+
     }
 }
