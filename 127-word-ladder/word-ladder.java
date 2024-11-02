@@ -1,32 +1,32 @@
-class pair{
-    String fir;
-    int steps;
-    pair(String fir,int steps){
-        this.fir=fir;
-        this.steps=steps;
+class Pair{
+    String p;
+    int v;
+    Pair(String p,int v){
+        this.p=p;
+        this.v=v;
     }
 }
 class Solution {
     public int ladderLength(String beginWord, String endWord, List<String> wordList) {
-        Queue<pair>q=new LinkedList<>();
-        q.add(new pair(beginWord,1));
-        Set<String>st=new HashSet<>();
-        for(String s:wordList){
-            st.add(s);
-        }
+        Set<String>s=new HashSet<>();
+        for(String l:wordList) s.add(l);
+        Queue<Pair>q=new LinkedList<>();
+        q.add(new Pair(beginWord,1));
         while(!q.isEmpty()){
-            String node=q.peek().fir;
-            int step=q.peek().steps;
-            q.poll();
-            if(node.equals(endWord)) return step;
-            for(int i=0;i<node.length();i++){
+            Pair pp=q.poll();
+            String ss=pp.p;
+            int pratik=pp.v;
+            if(ss.equals(endWord)){
+                return pratik;
+            } 
+            for(int i=0;i<ss.length();i++){
                 for(char ch='a';ch<='z';ch++){
-                    char []ch1=node.toCharArray();
+                    char []ch1=ss.toCharArray();
                     ch1[i]=ch;
-                    String replace=new String(ch1);
-                    if(st.contains(replace)){
-                        st.remove(replace);
-                        q.add(new pair(replace,step+1));
+                    String sharma=new String(ch1);
+                    if(s.contains(sharma)){
+                        s.remove(sharma);
+                        q.add(new Pair(sharma,pratik+1));
                     }
                 }
             }
