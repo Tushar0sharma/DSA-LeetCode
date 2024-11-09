@@ -1,39 +1,33 @@
-class Pair{
-    int row;
-    int col;
-    int k;
-    Pair(int row,int col,int k){
-        this.row=row;
-        this.col=col;
-        this.k=k;
-    }
-}
 class Solution {
-    int di=Integer.MAX_VALUE;
     public int shortestPathBinaryMatrix(int[][] grid) {
-        if(grid[0][0]!=0 || grid[grid.length-1][grid[0].length-1]!=0) return -1;
-        Queue<Pair>q=new LinkedList<>();
-        q.add(new Pair(0,0,1)); int n = grid.length;
-        int m = grid[0].length;
-        boolean [][]vis=new boolean[n][m];
-        while(!q.isEmpty()){
-            int r=q.peek().row;
-            int c=q.peek().col;
-            int d=q.peek().k;
-            if(r==grid.length-1 && c==grid[0].length-1){
-                di=Math.min(di,d);
-            }
-            q.poll();
-            int [][]direction = {{1,0}, {0,1}, {-1,0}, {0,-1}, {1,1}, {-1,-1}, {1,-1}, {-1,1}};
-            for(int[] i:direction){
+        int n=grid.length;
+        if(grid[0][0]!=0 || grid[n-1][n-1]!=0) return -1;
+
+        int [][]dir={{1,0},{0,1},{-1,0},{0,-1},{-1,1},{1,-1},{1,1},{-1,-1}};
+        PriorityQueue<int[]>pq=new PriorityQueue<>((a,b)->a[0]-b[0]);
+        int [][]dist=new int[n][n];
+        for(int []i:dist){
+            Arrays.fill(i,Integer.MAX_VALUE);
+        }
+        pq.add(new int[]{1,0,0});
+        dist[0][0]=0;
+        while(!pq.isEmpty()){
+            int[] p=pq.poll();
+            int t=p[0];
+            int r=p[1];
+            int c=p[2];
+            if(r==n-1 && c==n-1) return t;
+
+            for(int []i:dir){
                 int nr=r+i[0];
                 int nc=c+i[1];
-                if(nr >= 0 && nr < n && nc >= 0 && nc < m && grid[nr][nc] == 0 && !vis[nr][nc]){
-                    q.add(new Pair(nr,nc,d+1));
-                    vis[nr][nc]=true;
+                int nt=t+1;
+                if(nr>=0 && nc>=0 && nr<n && nc<n && grid[nr][nc]==0 && dist[nr][nc]>nt){
+                    dist[nr][nc]=nt;
+                    pq.add(new int[]{nt,nr,nc});
                 }
             }
         }
-        return di==Integer.MAX_VALUE?-1:di;
+        return -1;
     }
 }
