@@ -1,20 +1,20 @@
 class Solution {
     public String reverseWords(String s) {
-        String a="";
-        String word="";
         s=s.trim()+" ";
-        int fg=0;
+        int a=0;
+        String word="";
+        String ans="";
         for(int i=0;i<s.length();i++){
-            if(s.charAt(i)==' ' && fg==0){
-                a=word+" "+a;
+            if(s.charAt(i)==' ' && a==0){
+                ans=word+" "+ans;
                 word="";
-                fg=1;
+                a=1;
             }
             else if(s.charAt(i)!=' '){
                 word+=s.charAt(i);
-                fg=0;
+                a=0;
             }
         }
-        return a.trim();
+        return ans.trim();
     }
 }
