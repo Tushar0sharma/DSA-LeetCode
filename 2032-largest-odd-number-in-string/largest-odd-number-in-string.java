@@ -1,14 +1,14 @@
 class Solution {
     public String largestOddNumber(String num) {
-        StringBuilder a=new StringBuilder();
-        boolean j=false;
+        String ans="";
+        boolean b=false;
         for(int i=num.length()-1;i>=0;i--){
-            char ch=num.charAt(i);
-            if(j || (ch-'0')%2!=0){
-                j=true;
-                a.insert(0,ch);
+            int a=num.charAt(i)-'0';
+            if(a%2!=0) b=true;
+            if(b){
+                ans=num.charAt(i)+ans;
             }
         }
-        return a.toString();
+        return ans;
     }
 }
