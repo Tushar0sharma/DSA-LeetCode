@@ -15,7 +15,8 @@ class Solution {
     }
     public boolean call(int []q,int n,int mid){
         for(int i:q){
-            n-=(i+mid-1)/mid;
+            // n-=(i+mid-1)/mid; // alternative of math.ceil
+            n-=Math.ceil(i/(mid*1.0));
             if(n<0) return false;
         }
         return true;
