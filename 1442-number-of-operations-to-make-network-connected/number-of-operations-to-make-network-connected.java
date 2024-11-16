@@ -1,33 +1,30 @@
 class Solution {
     public int makeConnected(int n, int[][] connections) {
-        if(n-1>connections.length) return -1;
-        int []par=new int[n];
-        int []rank=new int[n];
-        for(int i=0;i<n;i++){
-            par[i]=i;
-            rank[i]=1;
+        int m=connections.length;
+        if(n-1>m) return -1;
+
+        boolean []vis=new boolean[n];
+        List<List<Integer>>ll=new ArrayList<>();
+        for(int i=0;i<n;i++) ll.add(new ArrayList<>());
+        for(int []i:connections){
+            ll.get(i[0]).add(i[1]);
+            ll.get(i[1]).add(i[0]);
         }
-        int ans=n;
-        for(int []i:connections) ans-=union(i[0],i[1],par,rank);
+        int ans=0;
+        for(int i=0;i<n;i++){
+            if(!vis[i]){
+                ans++;
+                dfs(vis,ll,i);
+            }
+        }
         return ans-1;
     }
-    public int union(int u,int v,int []par,int []rank){
-        int pu=find(par,u);
-        int pv=find(par,v);
-        if(pu==pv) return 0;
-
-        if(rank[pu]<rank[pv]){
-            par[pu]=pv;
-            rank[pv]+=rank[pu];
+    public void dfs(boolean[]vis,List<List<Integer>>ll,int i){
+        vis[i]=true;
+        for(int j:ll.get(i)){
+            if(!vis[j]){
+                dfs(vis,ll,j);
+            }
         }
-        else{
-            par[pv]=pu;
-            rank[pu]+=rank[pv];
-        }
-        return 1;
-    }
-    public int find(int []par,int u){
-        if(u==par[u]) return u;
-        return par[u]=find(par,par[u]);
     }
 }
