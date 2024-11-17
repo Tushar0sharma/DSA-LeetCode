@@ -13,9 +13,9 @@ class Solution {
             while(!d.isEmpty() && currsum[i]-currsum[d.getFirst()]>=target){
                 ans=Math.min(ans,i-d.pollFirst());
             }
-            while(!d.isEmpty() && currsum[i]<=currsum[d.getLast()]){
-                d.pollLast();
-            }
+            // while(!d.isEmpty() && currsum[i]<=currsum[d.getLast()]){
+            //     d.pollLast();
+            // }
             d.add(i);
         }
         return ans==Integer.MAX_VALUE?0:ans;
