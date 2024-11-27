@@ -1,21 +1,22 @@
 class Solution {
     public int[] shortestDistanceAfterQueries(int n, int[][] queries) {
-        int []ans=new int[queries.length];
-        int k=0;
         Map<Integer,Integer>mp=new HashMap<>();
         for(int i=0;i<n-1;i++) mp.put(i,i+1);
-        for(int i[]:queries){
-            if(!mp.containsKey(i[0])|| mp.get(i[0])>=i[1]){
-                ans[k++]=mp.size();
+        int []ans=new int[queries.length];
+        for(int i=0;i<queries.length;i++){
+            int st=queries[i][0];
+            int en=queries[i][1];
+            if(!mp.containsKey(st) || mp.get(st)>=en){
+                ans[i]=mp.size();
                 continue;
             }
-            int j=mp.get(i[0]);
-            while(j<i[1]){
+            int j=mp.get(st);
+            while(j<en){
                 j=mp.remove(j);
             }
-            mp.put(i[0],i[1]);
-            ans[k++]=mp.size();
+            mp.put(st,en);
+            ans[i]=mp.size();
         }
-        return ans;        
+        return ans;
     }
 }
