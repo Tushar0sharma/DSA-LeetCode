@@ -5,7 +5,7 @@ class Solution {
         for(int i=0;i<n;i++) par[i]=i;
         PriorityQueue<int[]>pq=new PriorityQueue<>((a,b)->a[0]-b[0]);
         for(int i=0;i<n;i++){
-            for(int j=0;j<n;j++){
+            for(int j=i+1;j<n;j++){
                 pq.add(new int[]{Math.abs(points[j][0]-points[i][0])+Math.abs(points[j][1]-points[i][1]),i,j});
             }
         }
