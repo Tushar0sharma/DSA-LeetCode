@@ -4,31 +4,28 @@ class Solution {
         int m=grid[0].length;
         int []par=new int[n+m+1];
         int []size=new int[n+m+1];
-        for(int i=0;i<par.length;i++){
+        for(int i=0;i<n+m+1;i++){
             par[i]=i;
         }
         for(int i=0;i<n;i++){
             for(int j=0;j<m;j++){
                 if(grid[i][j]==1){
-                    int r=i;
-                    int c=j+n;
-                    union(r,c,par,size);
+                    int row=i;
+                    int col=j+n;
+                    union(row,col,par,size);
                 }
             }
         }
-        System.out.println("Parent Array: " + Arrays.toString(par));
-        System.out.println("Size Array: " + Arrays.toString(size));
+        System.out.println(Arrays.toString(size));
         int cnt=0;
-        for(int i=0;i<par.length;i++){
-            if(par[i]==i){
-                if(size[i]>1) cnt+=size[i];
-            }
+        for(int i=0;i<n+m+1;i++){
+            if(size[i]>1 && par[i]==i) cnt+=size[i];
         }
         return cnt;
     }
-    public int find(int u,int []par){
-        if(u==par[u]) return u;
-        return par[u]=find(par[u],par);
+    public int find(int p,int []par){
+        if(p==par[p]) return p;
+        return par[p]=find(par[p],par);
     }
     public void union(int u,int v,int []par,int []size){
         int pu=find(u,par);
@@ -38,12 +35,12 @@ class Solution {
             return;
         }
         if(size[pu]>size[pv]){
+            size[pu]+=size[pv]+1;
             par[pv]=pu;
-            size[pu]+=(size[pv]+1);
         }
         else{
+            size[pv]+=size[pu]+1;
             par[pu]=pv;
-            size[pv]+=(size[pu]+1);
         }
     }
 }
