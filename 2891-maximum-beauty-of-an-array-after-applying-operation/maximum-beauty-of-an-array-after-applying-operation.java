@@ -1,15 +1,13 @@
 class Solution {
     public int maximumBeauty(int[] nums, int k) {
-        Map<Integer,Integer>mp=new TreeMap<>();
-        for(int i:nums){
-            mp.put(i-k,mp.getOrDefault(i-k,0)+1);
-            mp.put(i+k+1,mp.getOrDefault(i+k+1,0)-1);
-        }
-        int cnt=0;
+        Arrays.sort(nums);
+        int j=0;
         int max=0;
-        for(int i:mp.keySet()){
-            cnt+=mp.get(i);
-            if(cnt>max) max=cnt;
+        for(int i=0;i<nums.length;i++){
+            while(i>j &&nums[i]-nums[j]>2*k){
+                j++;
+            }
+            max=Math.max(i-j+1,max);
         }
         return max;
     }
