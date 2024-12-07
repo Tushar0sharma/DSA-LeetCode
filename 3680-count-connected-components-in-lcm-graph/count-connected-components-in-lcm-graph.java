@@ -18,7 +18,7 @@ class Solution {
     }
 
     public int countComponents(int[] nums, int threshold) {
-        Arrays.sort(nums);
+        // Arrays.sort(nums);
         Map<Integer,Integer>mp=new HashMap<>();
         int n=nums.length;
         for(int i=0;i<n;i++){
@@ -51,8 +51,6 @@ class Solution {
             }
         }
         Set<Integer>s=new HashSet<>();
-        System.out.println(Arrays.toString(par));
-        System.out.println(Arrays.toString(size));
         for(int i=0;i<n;i++) s.add(find(i,par));
         return s.size();
     }
