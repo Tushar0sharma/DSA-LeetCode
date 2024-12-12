@@ -1,40 +1,19 @@
 class Solution {
     public double mincostToHireWorkers(int[] quality, int[] wage, int k) {
-        
-        int n = quality.length;
-        
-        List<Pair<Double, Integer>> wageToQualityRatioList = new ArrayList<>();
-        
-        for (int i = 0 ; i < n ; i++) {
-            wageToQualityRatioList.add(new Pair((double) wage[i] / quality[i], quality[i]));
+        List<double[]>l=new ArrayList<>();
+        int n=wage.length;
+        for(int i=0;i<n;i++){
+            l.add(new double[]{(double)wage[i]/quality[i],(double)quality[i]});
         }
-        
-        Collections.sort(wageToQualityRatioList, (x, y) -> Double.compare(x.getKey(), y.getKey()));
-        
-        PriorityQueue<Integer> maxHeap = new PriorityQueue<>((x, y) -> (y - x));
-        
-        
-        int curTotalQuality = 0;
-        int curQuality = 0;
-        
-        for (int i = 0 ; i < k ; i++) {
-            curQuality = wageToQualityRatioList.get(i).getValue();
-            maxHeap.add(curQuality);
-            curTotalQuality += curQuality;
+        Collections.sort(l,(a,b)->Double.compare(a[0],b[0]));
+        double ans=Double.MAX_VALUE,sum=0;
+        PriorityQueue<Double>pq=new PriorityQueue<>(Collections.reverseOrder());
+        for(double[]i:l){
+            sum+=i[1];
+            pq.add(i[1]);
+            if(pq.size()>k) sum-=pq.poll();
+            if(pq.size()==k) ans=Math.min(ans,sum*i[0]);
         }
-        
-        double curRatio = wageToQualityRatioList.get(k-1).getKey();
-        double ans = curTotalQuality * curRatio;
-        
-        for (int i = k ; i < n ; i++) {
-            curRatio = wageToQualityRatioList.get(i).getKey();
-            curQuality = wageToQualityRatioList.get(i).getValue();
-            
-            maxHeap.add(curQuality);
-            curTotalQuality += curQuality - maxHeap.poll();
-            ans = Math.min(ans, curTotalQuality * curRatio);
-        }
-        
         return ans;
     }
 }
