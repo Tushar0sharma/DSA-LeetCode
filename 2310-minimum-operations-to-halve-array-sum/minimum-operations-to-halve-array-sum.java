@@ -14,8 +14,6 @@ class Solution {
             pq.add(a/2);
             k++;
         }
-        System.out.println(pq);
-        System.out.println(pq.poll()/2);
         return k;
     }
 }
