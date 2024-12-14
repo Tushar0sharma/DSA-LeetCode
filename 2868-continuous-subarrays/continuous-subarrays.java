@@ -1,18 +1,29 @@
 class Solution {
     public long continuousSubarrays(int[] nums) {
         long ans=0;
-        PriorityQueue<Integer>min=new PriorityQueue<>();
-        PriorityQueue<Integer>max=new PriorityQueue<>(Collections.reverseOrder());
+        Deque<Integer>min=new ArrayDeque<>();
+        Deque<Integer>max=new ArrayDeque<>();
         int l=0;
         for(int r=0;r<nums.length;r++){
-            min.add(nums[r]);
-            max.add(nums[r]);
-            while((max.peek()-min.peek(            ))>2){
-                min.remove(nums[l]);
-                max.remove(nums[l]);
-                l++;
+            while(!min.isEmpty() && nums[min.peekLast()]>nums[r]){
+                min.pollLast();
             }
-            ans+=(r-l+1);
+            min.addLast(r);
+            while(!max.isEmpty() && nums[max.peekLast()]<nums[r]){
+                max.pollLast();
+            }
+            max.addLast(r);
+            while(!min.isEmpty() && !max.isEmpty() && nums[max.peekFirst()]-nums[min.peekFirst()]>2){
+                if(min.peekFirst()>max.peekFirst()){
+                    l=max.peekFirst()+1;
+                    max.pollFirst();
+                }
+                else{
+                    l=min.peekFirst()+1;
+                    min.pollFirst();
+                }
+            }
+            ans+=r-l+1;
         }
         return ans;
     }
