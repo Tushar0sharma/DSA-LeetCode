@@ -1,27 +1,16 @@
 class Solution {
     public long continuousSubarrays(int[] nums) {
         long ans=0;
-        Deque<Integer>min=new ArrayDeque<>();
-        Deque<Integer>max=new ArrayDeque<>();
+        TreeMap<Integer,Integer>mp=new TreeMap<>();
         int l=0;
         for(int r=0;r<nums.length;r++){
-            while(!min.isEmpty() && nums[min.peekLast()]>nums[r]){
-                min.pollLast();
-            }
-            min.addLast(r);
-            while(!max.isEmpty() && nums[max.peekLast()]<nums[r]){
-                max.pollLast();
-            }
-            max.addLast(r);
-            while(!min.isEmpty() && !max.isEmpty() && nums[max.peekFirst()]-nums[min.peekFirst()]>2){
-                if(min.peekFirst()>max.peekFirst()){
-                    l=max.peekFirst()+1;
-                    max.pollFirst();
+            mp.put(nums[r],mp.getOrDefault(nums[r],0)+1);
+            while(mp.lastEntry().getKey()-mp.firstEntry().getKey()>2){
+                mp.put(nums[l],mp.get(nums[l])-1);
+                if(mp.get(nums[l])==0){
+                    mp.remove(nums[l]);
                 }
-                else{
-                    l=min.peekFirst()+1;
-                    min.pollFirst();
-                }
+                l++;
             }
             ans+=r-l+1;
         }
