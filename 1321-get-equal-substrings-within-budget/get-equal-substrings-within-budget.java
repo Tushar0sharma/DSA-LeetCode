@@ -1,16 +1,16 @@
 class Solution {
     public int equalSubstring(String s, String t, int maxCost) {
         int max=0;
-        int start=0;
-        int currcost=0;
-
+        int j=0;
+        int curr=0;
+        
         for(int i=0;i<s.length();i++){
-            currcost+=Math.abs(s.charAt(i)-t.charAt(i));
-            while(currcost>maxCost){
-                currcost-=Math.abs(s.charAt(start)-t.charAt(start));
-                start++;
+            curr+=Math.abs(s.charAt(i)-t.charAt(i));
+            while(curr>maxCost){
+                curr-=Math.abs(s.charAt(j)-t.charAt(j));
+                j++;
             }
-            max=Math.max(max,i-start+1);
+            max=Math.max(max,i-j+1);
         }
         return max;
     }
