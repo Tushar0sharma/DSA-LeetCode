@@ -1,18 +1,19 @@
 class Solution {
     public int mySqrt(int x) {
-        if(x==0){
-            return 0;
-        }
-        int start =1;
-        int end=x;
-        while(start<=end){
-            int mid=start+(end-start)/2;
-            if((long)mid*mid > (long)x){
-                end=mid-1;
+        long i=0;
+        long j=x;
+        int ans=x;
+        while(i<=j){
+            long mid=i+(j-i)/2;
+            long val=mid*mid;
+            if(val<=x){
+                ans=(int)mid;
+                i=mid+1;
             }
-            else if(mid*mid==x) return mid;
-            else start=mid+1;
+            else{
+                j=mid-1;
+            }
         }
-        return Math.round(end);
+        return ans;
     }
 }
