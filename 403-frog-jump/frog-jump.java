@@ -1,22 +1,28 @@
 class Solution {
+    Map<Integer,Integer>mp=new HashMap<>();
+    Boolean [][]dp;
     public boolean canCross(int[] stones) {
-        if(stones[1]-stones[0]!=1) return false;
-        Boolean [][]dp=new Boolean[stones.length][stones.length];
-        return call(1,1,stones,dp);
+        int n=stones.length;
+        if(stones[1]!=1) return false;
+        dp=new Boolean[n][n];
+        for(int i=0;i<n;i++) mp.put(stones[i],i);
+        return call(1,1,stones);
     }
-    public boolean call(int i,int jump,int []stones,Boolean[][]dp){
+    public boolean call(int i,int jmp,int []stones){
         if(i>=stones.length) return false;
         if(i==stones.length-1) return true;
-        if(dp[i][jump]!=null) return dp[i][jump];
+
+        if(dp[i][jmp]!=null) return dp[i][jmp];
         boolean ans=false;
-        for(int j=i+1;j<stones.length;j++){
-            if(stones[j]-stones[i]>jump+1) break;
-            for(int k=-1;k<=1;k++){
-                if(stones[j]-stones[i]==jump+k){
-                    ans=ans||call(j,jump+k,stones,dp);
-                }
-            }
+        if(mp.containsKey(stones[i]+jmp)){
+            ans=ans||call(mp.get(stones[i]+jmp),jmp,stones);
         }
-        return dp[i][jump]=ans;
+        if(mp.containsKey(stones[i]+jmp+1)){
+            ans=ans||call(mp.get(stones[i]+jmp+1),jmp+1,stones);
+        }
+        if(jmp>1&& mp.containsKey(stones[i]+jmp-1)){
+            ans=ans||call(mp.get(stones[i]+jmp-1),jmp-1,stones);
+        }
+        return dp[i][jmp]=ans;
     }
 }
