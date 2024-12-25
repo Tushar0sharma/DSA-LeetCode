@@ -1,22 +1,16 @@
 class Solution {
     public int maximumJumps(int[] nums, int target) {
         int n=nums.length;
-        Integer []dp=new Integer[n];
-        int a=call(0,dp,nums,target);
-        return a>0?a:-1;
-    }
-    public int call(int i,Integer []dp,int []nums,int target){
-        if(i==nums.length-1) return 0;
-        int ans=-1;
-        if(dp[i]!=null) return dp[i];
-        for(int j=i+1;j<nums.length;j++){
-            int diff=nums[j]-nums[i];
-            if(-target<=diff && diff<=target){
-                int res=call(j,dp,nums,target);
-                if(res!=-1)
-                ans=Math.max(ans,res+1);
+        int []dp=new int[n];
+        Arrays.fill(dp,-1);
+        dp[0]=0;
+        for(int i=1;i<n;i++){
+            for(int j=0;j<i;j++){
+                if(Math.abs(nums[i]-nums[j])<=target && dp[j]!=-1){
+                    dp[i]=Math.max(dp[j]+1,dp[i]);
+                }
             }
         }
-        return dp[i]=ans;
+        return dp[n-1];
     }
 }
