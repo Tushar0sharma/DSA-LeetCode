@@ -16,19 +16,19 @@
 class Solution {
     public List<Integer> largestValues(TreeNode root) {
         List<Integer>l=new ArrayList<>();
-        if(root==null) return l;
         Queue<TreeNode>q=new LinkedList<>();
+        if(root==null) return l;
         q.add(root);
         while(!q.isEmpty()){
             int s=q.size();
-            int max=Integer.MIN_VALUE;
-            for(int i=0;i<s;i++){
+            PriorityQueue<Integer>pq=new PriorityQueue<>(Collections.reverseOrder());
+            while(s-->0){
                 TreeNode p=q.poll();
-                max=Math.max(max,p.val);
+                pq.add(p.val);
                 if(p.left!=null) q.add(p.left);
                 if(p.right!=null) q.add(p.right);
             }
-            l.add(max);
+            l.add(pq.poll());
         }
         return l;
     }
