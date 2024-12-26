@@ -3,12 +3,12 @@ class Solution {
         int l=0;
         int r=arr.length-1;
         while(l<=r){
-            int m=(l+r)/2;
-            if(arr[m]-m-1<k){
-                l=m+1;
+            int mid=(l+r)/2;
+            if(arr[mid]-(mid+1)<k){
+                l=mid+1;
             }
             else{
-                r=m-1;
+                r=mid-1;
             }
         }
         return l+k;
