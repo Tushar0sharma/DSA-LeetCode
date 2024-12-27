@@ -7,7 +7,6 @@ class Solution {
         int cnt2=0;
         int a=0;
         int i=0,j=0;
-        System.out.println((k/2)+" "+(k/2-1));
         while(i<n && j<m){
             if(nums1[i]<nums2[j]){
                 if(a==(k/2-1)) cnt1=nums1[i];
@@ -25,7 +24,6 @@ class Solution {
                 j++;
                 a++;
             }
-            System.out.println(cnt1+" "+cnt2);
         }
         while(i<n){
             if(a==(k/2-1)) cnt1=nums1[i];
@@ -45,7 +43,6 @@ class Solution {
             j++;
             a++;
         }
-        System.out.println(cnt1+" "+cnt2);
         if(k%2!=0){
             return cnt2;
         }
