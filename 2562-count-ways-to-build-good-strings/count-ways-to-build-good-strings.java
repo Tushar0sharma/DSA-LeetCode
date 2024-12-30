@@ -1,23 +1,24 @@
 class Solution {
-    int l,r,numz,numo,mod=(int)1e9+7;
+    int numz,numo,mod;
     int[]dp;
     public int countGoodStrings(int low, int high, int zero, int one) {
-        l=low;
+        int ans=0;
+        numz=zero;
         dp=new int[high+1];
         Arrays.fill(dp,-1);
         numo=one;
-        numz=zero;
-        r=high;
-        return call(0);
+         mod=(int)1e9+7;
+        for(int i=low;i<=high;i++){
+            ans=(ans+call(i))%mod;
+        }
+        return ans;
     }
-    public int call(int len){
-        if(len>r) return 0;
-        if(dp[len]!=-1) return dp[len];
-        if(len>=l && r>=len){
-            return dp[len]= (call(len+numo)+call(len+numz)+1)%mod;
-        }
-        else{
-            return dp[len]= (call(len+numo)+call(len+numz))%mod;
-        }
-    } 
+    public int call(int target){
+        if(target==0) return 1;
+        if(target<0) return 0;
+        if(dp[target]!=-1) return dp[target];
+        int a=call(target-numz);
+        int b=call(target-numo);
+        return dp[target]=(a+b)%mod;
+    }
 }
