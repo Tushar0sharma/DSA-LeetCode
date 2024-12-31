@@ -1,7 +1,7 @@
 class Solution {
     int [][]dp;
     public int mincostTickets(int[] days, int[] costs) {
-        dp=new int[366][1000];
+        dp=new int[366][400];
         for(int []i:dp) Arrays.fill(i,-1);
         return call(0,0,days,costs);
     }
