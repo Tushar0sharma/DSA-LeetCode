@@ -1,30 +1,23 @@
 class Solution {
     public int swimInWater(int[][] grid) {
-        PriorityQueue<int[]>pq=new PriorityQueue<>((a,b)->a[2]-b[2]);
-        pq.add(new int[]{0,0,grid[0][0]});
+        int ans=-1;
+        int l=0;
         int n=grid.length;
-        int [][]dist=new int[n][n];
-        for(int []i:dist) Arrays.fill(i,Integer.MAX_VALUE);
-        dist[0][0]=0;
-        int [][]dir={{0,1},{1,0},{-1,0},{0,-1}};
-        while(!pq.isEmpty()){
-            int []p=pq.poll();
-            int r=p[0];
-            int c=p[1];
-            int cost=p[2];
-            if(r==n-1 && c==n-1) return cost;
-            for(int []i:dir){
-                int nr=r+i[0];
-                int nc=c+i[1];
-                if(nr>=0  && nc>=0 && nc<n && nr<n){
-                    int nt=Math.max(cost,grid[nr][nc]);
-                    if(dist[nr][nc]>nt){
-                        dist[nr][nc]=nt;
-                        pq.add(new int[]{nr,nc,nt});
-                    }     
-                }
-            }            
+        int r=n*n-1;
+        while(l<=r){
+            int mid=(l+r)/2;
+            if(call(0,0,mid,new boolean[n][n],grid)){
+                ans=mid;
+                r=mid-1;
+            }
+            else l=mid+1;
         }
-        return -1;
+        return ans;
+    }
+    public boolean call(int i,int j,int mid,boolean [][]vis,int [][]grid){
+        if(i<0 || j<0 || i>=grid.length || j>=grid[0].length || grid[i][j]>mid || vis[i][j]) return false;
+        if(i==grid.length-1 && j==grid[0].length-1) return true;
+        vis[i][j]=true;
+        return call(i+1,j,mid,vis,grid)||call(i-1,j,mid,vis,grid)||call(i,j-1,mid,vis,grid)||call(i,j+1,mid,vis,grid);
     }
 }
