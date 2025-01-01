@@ -12,7 +12,6 @@ class Solution {
         int rightOnes = totalOnes;
         for (int i = 0; i < s.length() - 1; i++) {
             char ch = s.charAt(i);
-            
             if (ch == '0') {
                 leftZeros++;
             } else {
