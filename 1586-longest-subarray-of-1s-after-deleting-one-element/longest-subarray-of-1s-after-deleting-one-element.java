@@ -6,7 +6,7 @@ class Solution {
             if(nums[j]==0){
                 zero++;
             }
-            if(zero>1){
+            while(zero>1){
                 if(nums[i++]==0){
                     zero--;
                 }
