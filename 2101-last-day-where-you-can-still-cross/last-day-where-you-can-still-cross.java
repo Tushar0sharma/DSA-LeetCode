@@ -3,7 +3,7 @@ class Solution {
         int max=0;
         int n=cells.length;
         int l=0;
-        int r=n,ans=0;
+        int r=n-1,ans=0;
         while(l<=r){
             int mid=(l+r)/2;
             if(check(row,col,cells,mid)){
