@@ -1,33 +1,33 @@
 class Solution {
     public int maxDistance(int[] position, int m) {
         Arrays.sort(position);
-
-        int hi = 1000000000;
-        int lo = 1;
-
-        while (lo < hi) {
-            int mi = (lo + hi + 1) / 2; 
-            if (check(position, mi, m)) {
-                lo = mi;
-            } else {
-                hi = mi - 1;
+        long l=0,r=0;
+        for(int i:position) r=Math.max(r,i);
+        int ans=-1;
+        while(l<=r){
+            long mid=(l+r)/2;
+            if(call(position,mid,m)){
+                ans=(int)mid;
+                l=mid+1;
             }
+            else r=mid-1;
         }
-
-        return lo;
+        return ans;
     }
-
-    private boolean check(int[] position, int minimumDistance, int m) {
-        int lastBallPosition = position[0];
-        int ballsLeftToBePlaced = m - 1;
-        for (int i = 1; i < position.length && ballsLeftToBePlaced != 0; ) {
-            if (position[i] - lastBallPosition < minimumDistance) {
-                i++;
-            } else {
-                lastBallPosition = position[i];
-                ballsLeftToBePlaced--;
+    public boolean call(int[]arr,long mid,int m){
+        int a=arr[0];
+        m--;
+        int j=1;
+        while(j<arr.length && m>0){
+            if(arr[j]-a<mid){
+                j++;
+            }
+            else{
+                a=arr[j];
+                m--;
+                j++;
             }
         }
-        return ballsLeftToBePlaced == 0;
+        return m==0;
     }
 }
