@@ -18,7 +18,6 @@ class Solution {
         return ans;
     }
     public boolean call(int mid,int []a,int p){
-        System.out.println(mid);
         int j=0;
         int max=0;
         while(j<a.length-1 && p>0){
