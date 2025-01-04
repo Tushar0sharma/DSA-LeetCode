@@ -3,7 +3,6 @@ class Solution {
         Arrays.sort(nums);
         int l=0,ans=0;
         int r=nums[nums.length-1]-nums[0];
-        System.out.println(Arrays.toString(nums));
         while(l<=r){
             int mid=(l+r)/2;
             if(call(mid,nums,p)){
