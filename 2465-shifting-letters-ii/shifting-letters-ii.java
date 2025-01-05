@@ -15,7 +15,6 @@ class Solution {
         for(int i=1;i<n;i++){
             pre[i]+=pre[i-1];
         }
-        System.out.println(Arrays.toString(pre));
         int k=0;
         String ans="";
         for(char ch:s.toCharArray()){
