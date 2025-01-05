@@ -9,7 +9,7 @@ class Solution {
         return cnt;
     }
     public int call(int a,int t,int l,int r,List<Integer>nums){
-        int ans=0;
+        int ans=l-1;
         while(l<=r){
             int mid=(l+r)/2;
             if(a+nums.get(mid)<t){
@@ -18,6 +18,7 @@ class Solution {
             }
             else r=mid-1;
         }
-        return r;
+        System.out.println(ans+" "+r);
+        return ans;
     }
 }
