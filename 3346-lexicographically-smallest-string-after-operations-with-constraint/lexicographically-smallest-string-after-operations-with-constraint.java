@@ -1,19 +1,18 @@
 class Solution {
     public String getSmallestString(String s, int k) {
         int n=s.length();
-        char []ch=s.toCharArray();
+        char []ch1=s.toCharArray();
         for(int i=0;i<n;i++){
-            int dist=call(s.charAt(i),'a');
-            if(dist<=k){
-                ch[i]='a';
-                k-=dist;
-            }
-            else if(k>0){
-                ch[i]=(char)(ch[i]-k);
-                k=0;
+            for(char ch='a';ch<='z';ch++){
+                int dist=call(ch,s.charAt(i));
+                if(dist<=k){
+                    ch1[i]=ch;
+                    k-=dist;
+                    break;
+                }
             }
         }
-        return new String(ch);
+        return new String(ch1);
     }
     public int call(char c,char a){
         int d=Math.abs(c-a);
