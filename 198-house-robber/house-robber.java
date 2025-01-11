@@ -1,15 +1,17 @@
 class Solution {
     public int rob(int[] nums) {
-        if(nums.length==0) return 0;
-        if(nums.length==1) return nums[0];
-        
-        int prevn=nums[0];
-        int prev=Math.max(prevn,nums[1]);        
-        for(int i=2;i<nums.length;i++){
-            int curr=Math.max(prev,prevn+nums[i]);
-            prevn=prev;
-            prev=curr;
-        }
-        return prev;
+        int n=nums.length;
+        int []dp=new int[n];
+        Arrays.fill(dp,-1);
+        return call(dp,n,nums,0);
+    }
+    public int call(int[]dp,int n,int []nums,int i){
+        if(i==n-1) return nums[n-1];
+        if(i>=n) return 0;
+        if(dp[i]!=-1) return dp[i];
+        int take=0,nottake=0;
+        take=call(dp,n,nums,i+2)+nums[i];
+        nottake=call(dp,n,nums,i+1);
+        return dp[i]=Math.max(take,nottake);
     }
 }
