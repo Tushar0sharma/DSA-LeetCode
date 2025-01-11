@@ -1,14 +1,44 @@
+class trie{
+    trie[]arr;
+    int cnt;
+    trie(){
+        cnt=0;
+        arr=new trie[26];
+        for(int i=0;i<26;i++) arr[i]=null;
+    }
+}
 class Solution {
     public String longestCommonPrefix(String[] strs) {
-        Arrays.sort(strs);
-        System.out.println(Arrays.toString(strs));
-        String a="";
-        for(int i=0;i<strs[0].length();i++){
-            if(strs[0].charAt(i)==strs[strs.length-1].charAt(i)){
-                a+=strs[0].charAt(i);
-            }
-            else break;
+        trie root=new trie();
+        for(String s:strs){
+            add(s,root);
         }
-        return a;
+        int n=strs.length;
+        return call("",root,n);
+    }
+    public String call(String s,trie root,int n){
+        trie node=root;
+        while(true){
+            int idx1='.';
+            for(char ch='a';ch<='z';ch++){
+                int idx=ch-'a';
+                if(node.arr[idx]!=null && node.arr[idx].cnt==n){
+                    idx1=ch;
+                }
+            }
+            if(idx1=='.') break;
+            s+=(char)idx1;
+            node=node.arr[idx1-'a'];
+        }
+        return s;
+    }
+    public void add(String s,trie root){
+        trie node=root;
+        for(char ch:s.toCharArray()){
+            int idx=ch-'a';
+            if(node.arr[idx]==null) node.arr[idx]=new trie();
+            node=node.arr[idx];
+            node.cnt++;
+        }
     }
 }
