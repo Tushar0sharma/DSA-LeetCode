@@ -1,36 +1,26 @@
-// class pair{
-//     int row;
-//     int col;
-//     pair(int row,int col){
-//         this.row=row;
-//         this.col=col;
-//     }
-// }
 class Solution {
     public int firstCompleteIndex(int[] arr, int[][] mat) {
         int n=mat.length;
         int m=mat[0].length;
-        Map<Integer,Integer>mp=new HashMap<>();
-        int []rc=new int[n];
-        int []cc=new int[m];
+        int ans=Integer.MAX_VALUE;
+        int []map=new int[arr.length+1];
+        for(int i=0;i<arr.length;i++){
+            map[arr[i]]=i;
+        }
         for(int i=0;i<n;i++){
+            int max=0;
             for(int j=0;j<m;j++){
-                mp.put(mat[i][j],i*m+j);
-                rc[i]++;
-                cc[j]++;
+                max=Math.max(max,map[mat[i][j]]);
             }
+            ans=Math.min(max,ans);
         }
-        int k=0;
-
-        for(int i:arr){
-            int idx=mp.get(i);
-            int row=idx/m;
-            int col=idx%m;
-            rc[row]--;
-            cc[col]--;
-            if(rc[row]==0 || cc[col]==0) return k;
-            k++;
+        for(int i=0;i<m;i++){
+            int max=0;
+            for(int j=0;j<n;j++){
+                max=Math.max(max,map[mat[j][i]]);
+            }
+            ans=Math.min(max,ans);
         }
-        return -1;
+        return ans;
     }
 }
