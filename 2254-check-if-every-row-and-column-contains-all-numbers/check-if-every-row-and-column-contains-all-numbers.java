@@ -1,19 +1,20 @@
 class Solution {
     public boolean checkValid(int[][] matrix) {
         int n=matrix.length;
+        int m=matrix[0].length;
         for(int i=0;i<n;i++){
-            for(int j=0;j<n;j++){
-                int idx=Math.abs(matrix[i][j])-1;
-                if(matrix[i][idx]<0) return false;
-                matrix[i][idx]=-matrix[i][idx];
+            Set<Integer>s=new HashSet<>();
+            for(int j=0;j<m;j++){
+                s.add(matrix[i][j]);
             }
+            if(s.size()!=m) return false;
         }
-        for(int i=0;i<n;i++){
+        for(int i=0;i<m;i++){
+            Set<Integer>s=new HashSet<>();
             for(int j=0;j<n;j++){
-                int idx=Math.abs(matrix[j][i])-1;
-                if(matrix[idx][i]>0) return false;
-                matrix[idx][i]=-matrix[idx][i];
+                s.add(matrix[j][i]);
             }
+            if(s.size()!=m) return false;
         }
         return true;
     }
