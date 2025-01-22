@@ -2,18 +2,18 @@ class Solution {
     public List<List<Integer>> permute(int[] nums) {
         List<List<Integer>>ll=new ArrayList<>();
         List<Integer>l=new ArrayList<>();
-        print(ll,l,nums);
-       return ll;         
+        call(nums,ll,l);
+        return ll;
     }
-    public void print(List<List<Integer>>ll,List<Integer>l,int[]nums){
+    public void call(int[]nums,List<List<Integer>>ll,List<Integer>l){
         if(l.size()==nums.length){
             ll.add(new ArrayList<>(l));
-            return;
+            return ;
         }
         for(int i=0;i<nums.length;i++){
-           if(l.contains(nums[i])) continue;
+            if(l.contains(nums[i])) continue;
             l.add(nums[i]);
-            print(ll,l,nums);
+            call(nums,ll,l);
             l.remove(l.size()-1);
         }
     }
