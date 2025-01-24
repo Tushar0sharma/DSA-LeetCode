@@ -1,30 +1,32 @@
 class Solution {
     public List<Integer> eventualSafeNodes(int[][] graph) {
-        List<List<Integer>>ll=new ArrayList<>();
+        List<Integer>l=new ArrayList<>();
         int n=graph.length;
-        int []deg=new int[n];
-        for(int i=0;i<n;i++) ll.add(new ArrayList<>());
+        int []in=new int[n];
+        Map<Integer,List<Integer>>mp=new HashMap<>();
+        for(int i=0;i<n;i++) mp.put(i,new ArrayList<>());
+        int []out=new int[n];
         for(int i=0;i<n;i++){
-            for(int it:graph[i]){
-                 ll.get(it).add(i);
-                 deg[i]++;
+            for(int j:graph[i]){
+                out[i]++;
+                in[j]++;
+                mp.get(j).add(i);
             }
         }
-        return topo(deg,ll);
-    }
-    public List<Integer> topo(int[]deg,List<List<Integer>>ll){
+        // System.out.println(Arrays.toString(out));
+        System.out.println(mp);
+        
         Queue<Integer>q=new LinkedList<>();
-        int n=deg.length;
-        for(int i=0;i<n;i++) if(deg[i]==0) q.add(i);
-        List<Integer>ans=new ArrayList<>();
+        for(int i=0;i<n;i++) if(out[i]==0) q.add(i);
+        // System.out.println(q);
         while(!q.isEmpty()){
-            int w=q.poll();
-            ans.add(w);
-            for(int i:ll.get(w)){
-                if(--deg[i]==0) q.add(i);
+            int p=q.poll();
+            l.add(p);
+            for(int i:mp.get(p)){
+                if(--out[i]==0) q.add(i);
             }
         }
-        Collections.sort(ans);
-        return ans;
+        Collections.sort(l);
+        return l;
     }
 }
