@@ -24,19 +24,21 @@ class Solution {
         q.add(new int[]{i,j});
         int[][]dir={{1,0},{0,1},{-1,0},{0,-1}};
         int a=grid[i][j];
+        grid[i][j]=0;
         int n=grid.length;
         int m=grid[0].length;
 
-        boolean[][]vis=new boolean[n][m];
-        vis[i][j]=true;
+        // boolean[][]vis=new boolean[n][m];
+        // vis[i][j]=true;
         while(!q.isEmpty()){
             int []p=q.poll();
             for(int ii[]:dir){
                 int nr=p[0]+ii[0];
                 int nc=p[1]+ii[1];
-                if(nr>=0 && nr<n && nc>=0 && nc<m && grid[nr][nc]>0 && !vis[nr][nc]){
-                    vis[nr][nc]=true;
+                if(nr>=0 && nr<n && nc>=0 && nc<m && grid[nr][nc]>0){
+                    // vis[nr][nc]=true;
                     a+=grid[nr][nc];
+                    grid[nr][nc]=0;
                     q.add(new int[]{nr,nc});
                 }
             }
