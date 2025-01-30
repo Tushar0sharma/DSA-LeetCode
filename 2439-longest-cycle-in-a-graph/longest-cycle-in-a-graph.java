@@ -1,28 +1,36 @@
 class Solution {
-    int ans=-1;
-    public void call(int []cnt,boolean in[],boolean[]vis,int src,int []edges){
-        if(src!=-1){
-            int ne=edges[src];
-            in[src]=true;
-            vis[src]=true;
-            if(ne!=-1 && !vis[ne]){
-                cnt[ne]=cnt[src]+1;
-                call(cnt,in,vis,ne,edges);
-            }
-            else if(ne!=-1 && in[ne]){
-                ans=Math.max(ans,cnt[src]-cnt[ne]+1);
-            }
-            in[src]=false;
-        }
-    }
     public int longestCycle(int[] edges) {
         int n=edges.length;
-        boolean []vis=new boolean[n];
-        boolean []inrecursion=new boolean[n];
-        int []cnt=new int[n];
-        Arrays.fill(cnt,1);
+        Queue<Integer>q=new LinkedList<>();
+        int[]in=new int[n];
         for(int i=0;i<n;i++){
-            if(!vis[i]) call(cnt,inrecursion,vis,i,edges);
+            if(edges[i]!=-1) in[edges[i]]++;
+        }
+        boolean[]vis=new boolean[n];
+        for(int i=0;i<n;i++){
+            if(in[i]==0) q.add(i);
+        }
+        while(!q.isEmpty()){
+            int p=q.poll();
+            vis[p]=true;
+            int ne=edges[p];
+            if(ne!=-1){
+                if(--in[ne]==0) q.add(ne);
+            }
+        }
+        int ans=-1;
+        for(int i=0;i<n;i++){
+            if(!vis[i]){
+                int ne=edges[i];
+                int cnt=1;
+                vis[i]=true;
+                while(ne!=i){
+                    vis[ne]=true;
+                    ne=edges[ne];
+                    cnt++;
+                }
+                ans=Math.max(ans,cnt);
+            }
         }
         return ans;
     }
