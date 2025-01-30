@@ -13,25 +13,22 @@ class Solution {
         return min==Integer.MAX_VALUE?-1:min;
     }
     public int call(List<List<Integer>>ll,int src){
-        Queue<Integer>q=new LinkedList<>();
-        q.add(src);
+        Queue<int[]>q=new LinkedList<>();
+        q.add(new int[]{src,-1});
         int ans=Integer.MAX_VALUE;
         int n=ll.size();
-        int []par=new int[n];
         int[]dist=new int[n];
         Arrays.fill(dist,Integer.MAX_VALUE);
-        Arrays.fill(par,-1);
         dist[src]=0;
         while(!q.isEmpty()){
-            int p=q.poll();
-            for(int i:ll.get(p)){
+            int[] p=q.poll();
+            for(int i:ll.get(p[0])){
                 if(dist[i]==Integer.MAX_VALUE){
-                    dist[i]=dist[p]+1;
-                    par[i]=p;
-                    q.add(i);
+                    dist[i]=dist[p[0]]+1;
+                    q.add(new int[]{i,p[0]});
                 }
-                else if(par[i]!=p && par[p]!=i){
-                    ans=Math.min(ans,dist[p]+dist[i]+1);
+                else if(p[1]!=i){
+                    ans=Math.min(ans,dist[p[0]]+dist[i]+1);
                 }
             }
         }
