@@ -1,26 +1,23 @@
 class Solution {
     public boolean checkValidString(String s) {
-        int open=0;
-        int close=0;
-        int n=s.length()-1;
-        for(int i=0;i<s.length();i++){
-            if(s.charAt(i)=='('||s.charAt(i)=='*'){
-                open++;
-            }
+        Stack<Integer>st1=new Stack<>();
+        int i=0;
+        Stack<Integer>st2=new Stack<>();
+        for(char ch:s.toCharArray())
+        {
+            if(ch=='(') st1.push(i);
+            else if(ch=='*') st2.push(i);
             else{
-                open--;
+                if(!st1.isEmpty()) st1.pop();
+                else if(!st2.isEmpty()) st2.pop();
+                else return false;
             }
-            if(s.charAt(n-i)==')'||s.charAt(n-i)=='*'){
-                close++;
-            }
-            else{
-                close--;
-            }
-
-            if(open<0 ||close<0){
-                return false;
-            }
+            i++;
         }
-        return true;
+        while(!st1.isEmpty()&&!st2.isEmpty()&&st1.peek()<st2.peek()){
+            st1.pop();
+            st2.pop();
+        }
+        return st1.isEmpty();
     }
 }
