@@ -1,72 +1,69 @@
 class Solution {
     public int largestIsland(int[][] grid) {
         int n=grid.length;
-        int m=grid[0].length;
-        int []par=new int[n*m+1];
-        int []size=new int[n*m+1];
-        for(int i=0;i<n*m+1;i++){
-            par[i]=i;
+        int []par=new int[n*n+1];
+        int [][]dir={{1,0},{0,1},{-1,0},{0,-1}};
+        int []size=new int[n*n+1];
+        for(int i=0;i<n*n+1;i++){
             size[i]=1;
+            par[i]=i;
         }
         for(int i=0;i<n;i++){
-            for(int j=0;j<m;j++){
+            for(int j=0;j<n;j++){
                 if(grid[i][j]==1){
-                    int [][]dir={{0,1},{1,0},{0,-1},{-1,0}};
-                    for(int []k:dir){
-                        int nr=i+k[0];
+                    int row=i*n+j;
+                    for(int k[]:dir){
+                        int nr=k[0]+i;
                         int nc=k[1]+j;
-                        int rr=i*n+j;
-                        int cc=nr*n+nc;
-                        if(nr>=0 && nr<n && nc>=0 && nc<m && grid[nr][nc]==1){
-                            union(rr,cc,par,size);
+                        int col=nr*n+nc;
+                        if(nr>=0 && nr<n && nc>=0 && nc<n && grid[nr][nc]==1){
+                            union(row,col,par,size);
                         }
                     }
                 }
             }
         }
-        int nas=0;
+        int ans=0;
+        
         for(int i=0;i<n;i++){
-            for(int j=0;j<m;j++){
+            for(int j=0;j<n;j++){
                 if(grid[i][j]==0){
                     Set<Integer>s=new HashSet<>();
-                    int [][]dir={{0,1},{1,0},{0,-1},{-1,0}};
-                    for(int []k:dir){
-                        int nr=i+k[0];
+                    for(int k[]:dir){
+                        int nr=k[0]+i;
                         int nc=k[1]+j;
-                        int rr=i*n+j;
-                        int cc=nr*n+nc;
-                        if(nr>=0 && nr<n && nc>=0 && nc<m && grid[nr][nc]==1){
-                            s.add(find(cc,par));
+                        int col=nr*n+nc;
+                        if(nr>=0 && nr<n && nc>=0 && nc<n && grid[nr][nc]==1){
+                            s.add(find(par,col));
                         }
                     }
-                    int ans=0;
-                    for(int jj:s){
-                        ans+=size[jj];
+                    int jj=0;
+                    for(int kk:s){
+                        jj+=size[kk];
                     }
-                    nas=Math.max(nas,ans+1);
+                    ans=Math.max(ans,jj+1);
                 }
             }
         }
-        for(int i=0;i<n*n;i++){
-            nas=Math.max(nas,size[i]);
-        }
-        return nas;
-    }
-    public int find(int p,int []par){
-        if(p==par[p]) return p;
-        return par[p]=find(par[p],par);
+        System.out.println(Arrays.toString(par));
+        System.out.println(Arrays.toString(size));
+        return ans==0?n*n:ans;
     }
     public void union(int u,int v,int []par,int []size){
-        int pu=find(u,par);
-        int pv=find(v,par);
-        if(pu==pv) return;
+        int pu=find(par,u);
+        int pv=find(par,v);
+        if(pu==pv)return;
         if(size[pu]>size[pv]){
             size[pu]+=size[pv];
             par[pv]=pu;
         }
-        else {
+        else{
             size[pv]+=size[pu];
             par[pu]=pv;
         }
+    }
+    public int find(int []par,int p){
+        if(par[p]==p) return p;
+        return par[p]=find(par,par[p]); 
     }
 }
