@@ -1,16 +1,17 @@
 class Solution {
     public int findMinArrowShots(int[][] points) {
-        List<int[]>l=new ArrayList<>();
         Arrays.sort(points,(a,b)->Integer.compare(a[0],b[0]));
-        for(int i[]:points){
-            if(l.isEmpty() || l.get(l.size()-1)[1]<i[0]){
-                l.add(i);
+        int []prev=points[0];
+        int ans=1;
+        for(int i=1;i<points.length;i++){
+            if(points[i][0]>prev[1]){
+                ans++;
+                prev=points[i];
             }
-            else {
-                l.get(l.size()-1)[1]=Math.min(l.get(l.size()-1)[1],i[1]);
+            else{
+                prev[1]=Math.min(prev[1],points[i][1]);
             }
         }
-        for(int []i:l) System.out.println(Arrays.toString(i));
-        return l.size();
+        return ans;
     }
 }
