@@ -1,23 +1,19 @@
 class Solution {
     public int punishmentNumber(int n) {
-        int sum=0;
-        for(int num=1;num<=n;num++){
-            int sqr=num*num;
-            if(part(String.valueOf(sqr),num,0)){
-                // System.out.print(num+" ");
-                sum+=sqr;
+        int ans=0;
+        for(int i=1;i<=n;i++){
+            if(call(String.valueOf(i*i),i,0)){
+                ans+=i*i;
             }
         }
-        return sum;
+        return ans;
     }
-    public boolean part(String s,int num,int sum){
-        if(sum==num && s.length()==0){
-            return true;
-        }
-        if(sum>num || s.length()==0) return false;
-        for(int i=1;i<=s.length();i++){
-            int a=Integer.parseInt(s.substring(0,i));
-            if(part(s.substring(i),num,sum+a)) return true;
+    public boolean call(String n,int num,int sum){
+        if(sum==num && n.length()==0 ) return true;
+        if(sum>num ||n.length()==0) return false;
+        for(int i=1;i<=n.length();i++){
+            int left=Integer.parseInt(n.substring(0,i));
+            if(call(n.substring(i),num,sum+left)) return true;
         }
         return false;
     }
