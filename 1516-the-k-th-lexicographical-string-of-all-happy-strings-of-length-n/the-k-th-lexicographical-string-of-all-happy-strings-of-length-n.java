@@ -1,25 +1,24 @@
 class Solution {
-    List<String>l=new ArrayList<>();
-    StringBuilder sb=new StringBuilder();
+    String ans="";
+    int kk=-1;
     public String getHappyString(int n, int k) {
-        call(n,' ');
-        Collections.sort(l);
-        if(l.size()<k) return "";
-        else return l.get(k-1);
+        kk=k;
+        call("",n);
+        return ans;
     }
-    public void call(int n,char prev){
-        if(sb.length()==n){
-            l.add(sb.toString());
-            return;
+    public void call(String a,int n){
+        if(n==0){
+            kk--;
+            if(kk==0) ans=a;
+            return ;
         }
-        for(char ch='a';ch<='c';ch++){
-            if(ch!=prev){
-                int len=sb.length();
-                sb.append(ch);
-                call(n,ch);
-                sb.setLength(len);
-            }
+        if(a.length()==0 || a.charAt(a.length()-1)!='a'){
+            call(a+"a",n-1);
         }
-        return;
+        if(a.length()==0 ||a.charAt(a.length()-1)!='b'){
+            call(a+"b",n-1);
+        }if(a.length()==0 ||a.charAt(a.length()-1)!='c'){
+            call(a+"c",n-1);
+        } 
     }
 }
