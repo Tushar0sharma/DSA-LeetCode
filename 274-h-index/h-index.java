@@ -1,13 +1,16 @@
 class Solution {
     public int hIndex(int[] citations) {
         int n=citations.length;
-        int ans=0;
-        Arrays.sort(citations);
+        int []cnt=new int[n+1];
         for(int i=0;i<n;i++){
-            if(citations[i]>=n-i){
-                return n-i;
-            }
+            if(citations[i]<n) cnt[citations[i]]++;
+            else cnt[n]++;
         }
-        return ans;
+        int ans=0;
+        for(int i=n;i>=0;i--){
+            ans+=cnt[i];
+            if(ans>=i) return i;
+        }
+        return 0;
     }
 }
