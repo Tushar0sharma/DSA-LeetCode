@@ -17,7 +17,7 @@ class RandomizedSet {
         if(!mp.containsKey(val)) return false;
         int idx=mp.get(val);
         l.set(idx,l.get(l.size()-1));
-        mp.put(l.get(idx),idx);
+        mp.put(l.get(l.size()-1),idx);
         l.remove(l.size()-1);
         mp.remove(val);
         return true;
