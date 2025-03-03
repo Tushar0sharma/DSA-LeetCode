@@ -1,23 +1,15 @@
 class Solution {
     public int minSubArrayLen(int target, int[] nums) {
-        Deque<Integer>d=new LinkedList<>();
-        int n=nums.length;
-        long[]currsum=new long[n];
-        int ans=Integer.MAX_VALUE;
-        for(int i=0;i<n;i++){
-            if(i==0) currsum[i]=nums[i];
-            else currsum[i]=currsum[i-1]+nums[i];
-            if(currsum[i]>=target){
-                ans=Math.min(ans,i+1);
+        int j=0;
+        int max=Integer.MAX_VALUE;
+        int sum=0;
+        for(int i=0;i<nums.length;i++){
+            sum+=nums[i];
+            while(sum>=target){
+                max=Math.min(max,i-j+1);
+                sum-=nums[j];
+                j++;
             }
-            while(!d.isEmpty() && currsum[i]-currsum[d.getFirst()]>=target){
-                ans=Math.min(ans,i-d.pollFirst());
-            }
-            // while(!d.isEmpty() && currsum[i]<=currsum[d.getLast()]){
-            //     d.pollLast();
-            // }
-            d.add(i);
-        }
-        return ans==Integer.MAX_VALUE?0:ans;
+        }return max==Integer.MAX_VALUE?0:max;
     }
 }
