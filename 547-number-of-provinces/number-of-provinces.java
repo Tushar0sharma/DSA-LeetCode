@@ -1,30 +1,31 @@
 class Solution {
-    public int findCircleNum(int[][] mat) {
-        int n=mat.length;
-        List<List<Integer>>l=new ArrayList<>();
-        for(int i=0;i<n;i++){
-            l.add(new ArrayList<>());
-        }
+    public int findCircleNum(int[][] isConnected) {
+        List<List<Integer>>ll=new ArrayList<>();
+        int n=isConnected.length;
+        for(int i=0;i<n;i++) ll.add(new ArrayList<>());
         for(int i=0;i<n;i++){
             for(int j=0;j<n;j++){
-                if(i!=j && mat[i][j]==1) l.get(i).add(j);
+                if(isConnected[i][j]==0) continue;
+                ll.get(i).add(j);
+                ll.get(j).add(i);
             }
         }
-        boolean []vis=new boolean [n];
-        int c=0;
+        boolean[]vis=new boolean[n];
+        int ans=0;
         for(int i=0;i<n;i++){
-            if(!vis[i]){
-                c++;
-                call(vis,i,l);
+            if(!vis[i]) {
+                ans++;
+                dfs(i,vis,ll);
             }
         }
-        System.out.println(l);
-        return c;
+        return ans;
     }
-    public void call(boolean []vis,int i,List<List<Integer>>l){
+    public void dfs(int i,boolean []vis,List<List<Integer>>ll){
         vis[i]=true;
-        for(int j:l.get(i)){
-            if(!vis[j]) call(vis,j,l);
+        for(int j:ll.get(i)){
+            if(!vis[j]){
+                dfs(j,vis,ll);
+            }
         }
     }
 }
