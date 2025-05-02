@@ -2,40 +2,40 @@ class Solution {
     public String pushDominoes(String s) {
         int n=s.length();
         int []l=new int[n];
-        int []r=new int [n];
+        int[]r=new int[n];
         char prev='.';
         int cnt=1;
         for(int i=0;i<n;i++){
             if(s.charAt(i)=='R'){
                 prev='R';
                 cnt=1;
-                continue;
+            } 
+            else if(s.charAt(i)=='L'){
+                prev='L';
             }
-            else if(s.charAt(i)=='L' ) prev='L';
-            if(prev=='R' && s.charAt(i)=='.') r[i]=cnt++;
+            if(s.charAt(i)=='.' && prev=='R') l[i]=cnt++;
         }
-        cnt=1;
         prev='.';
+        cnt=1;
         for(int i=n-1;i>=0;i--){
-            if(s.charAt(i)=='L'){
+            if(s.charAt(i)=='L') {
                 prev='L';
                 cnt=1;
-                continue;
             }
-            else if(s.charAt(i)=='R'){
-                prev='R';
-            }
-            if(prev=='L' && s.charAt(i)=='.') l[i]=cnt++;
+            else if(s.charAt(i)=='R') prev='R';
+            if(s.charAt(i)=='.' && prev=='L') r[i]=cnt++;
         }
-        String ans="";
+        // System.out.println(Arrays.toString(l));
+        // System.out.println(Arrays.toString(r));
+        StringBuilder sb=new StringBuilder();
         for(int i=0;i<n;i++){
-            if(l[i]==0 && r[i]==0) ans+=s.charAt(i);
-            else if(l[i]==0) ans+='R';
-            else if(r[i]==0) ans+='L';
-            else if(l[i]==r[i]) ans+='.';
-            else if(l[i]>r[i]) ans+='R';
-            else ans+='L';
+            if(l[i]==0 && r[i]==0) sb.append(s.charAt(i));
+            else if(l[i]==0) sb.append("L");
+            else if(r[i]==0) sb.append("R");
+            else if(l[i]==r[i]) sb.append(".");
+            else if(l[i]>r[i]) sb.append("L");
+            else sb.append("R");
         }
-        return ans;
+        return sb.toString();
     }
 }
